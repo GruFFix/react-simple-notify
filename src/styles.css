@@ -1,0 +1,48 @@
+.react-notify-container {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    max-height: 100vh;
+    padding: 10px;
+    align-items: flex-end;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+    pointer-events: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    * {
+        pointer-events: auto;
+    }
+
+    &.top-left {
+        align-items: flex-start;
+    }
+
+    &.top-right {
+        align-items: flex-end;
+    }
+
+    &.bottom-left {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    &.bottom-right {
+        flex-direction: column-reverse;
+    }
+
+    &.top-center {
+        align-items: center;
+    }
+
+    &.bottom-center {
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+}
