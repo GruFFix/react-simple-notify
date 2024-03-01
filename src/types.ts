@@ -26,11 +26,6 @@ export interface NotifyOptions extends BaseNotifyOptions {
   id: string
 }
 
-export interface NotifyContextType {
-  openNotify: (options: Omit<NotifyOptions, 'id'>) => void
-  closeNotify: (id: string) => void
-  closeAllNotify: () => void
-}
 export interface NotifyProps extends BaseNotifyOptions {
   id: string
 }
