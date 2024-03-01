@@ -15,8 +15,8 @@ yarn add react-notify-lib
 
 ## Use
 ```jsx
-import { useNotify, NotifyContainers } from 'react-notify'
-import type { NotifyAlignment, NotifyRenderArgs } from 'react-notify'
+import { useNotify, NotifyContainers } from 'react-simple-notify'
+import type { NotifyAlignment, NotifyRenderArgs } from 'react-simple-notify'
 import 'react-notify/dist/style.css'
 
 export const App = () => {
