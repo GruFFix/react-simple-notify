@@ -7,6 +7,17 @@
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-notification",
+    "notification"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GruFFix/react-notify.git"
+  },
+  "license": "MIT",
   "sideEffects": [
     "**/*.css"
   ],
