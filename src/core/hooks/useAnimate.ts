@@ -1,12 +1,10 @@
 import { RefObject, useCallback, useLayoutEffect, useState } from 'react'
-
-import {NotifyAlignment} from "../types.ts";
-
+import { NotifyAlignment } from '../../types.ts'
 
 const ATTR_DYNAMIC = 'data-dynamic'
 const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
 
-export const useNotificationAnimations = (
+export const useAnimate = (
   containerRef: RefObject<HTMLElement>,
   alignment: NotifyAlignment,
 ): { isRendered: boolean } => {
@@ -55,52 +53,6 @@ export const useNotificationAnimations = (
       node.removeAttribute('style')
     }
   }
-
-  // const animateExit = (
-  //   node: Node,
-  //   previousSibling: Node | null,
-  //   nextSibling: Node | null,
-  // ): void => {
-  //   const clone = node.cloneNode(true) as HTMLElement
-  //
-  //   if (clone.hasAttribute(ATTR_REMOVAL_IN_PROGRESS)) return
-  //
-  //   const parentNode = nextSibling?.parentNode || previousSibling?.parentNode
-  //
-  //   if (parentNode) {
-  //     const referenceNode =
-  //       (nextSibling || previousSibling?.nextSibling) ?? null
-  //     parentNode.insertBefore(clone, referenceNode)
-  //   } else {
-  //     containerRef.current?.insertBefore(clone, null)
-  //     clone.animate(
-  //       [
-  //         {
-  //           height: `${clone.scrollHeight}px`,
-  //         },
-  //         { height: 0 },
-  //       ],
-  //       { duration: 150, easing: 'linear' },
-  //     )
-  //   }
-  //
-  //   clone.setAttribute(ATTR_DYNAMIC, 'true')
-  //   clone.setAttribute(ATTR_REMOVAL_IN_PROGRESS, 'true')
-  //   clone.style.transformOrigin = 'center'
-  //   clone.style.overflow = 'hidden'
-  //
-  //   clone.animate(
-  //     [
-  //       {
-  //         height: `${clone.scrollHeight}px`,
-  //       },
-  //       { height: 0 },
-  //     ],
-  //     { duration: 150, easing: 'linear' },
-  //   ).onfinish = () => {
-  //     clone.remove()
-  //   }
-  // }
 
   const animateExit = (
     node: Node,

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 
-import { useNotification } from "../hooks/useNotification.tsx";
+import { useNotifyActions } from '../hooks/useNotifyActions.ts'
 
-import { NotifyProps } from "../types.ts";
+import { NotifyProps } from '../types.ts'
 
 export const Notify: React.FC<NotifyProps> = React.memo(
   ({ id, duration, render }) => {
-    const { closeNotify } = useNotification()
+    const { closeNotify } = useNotifyActions()
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -16,6 +16,13 @@ export const Notify: React.FC<NotifyProps> = React.memo(
       return () => clearTimeout(timer)
     }, [id, duration, closeNotify])
 
-    return <div>{render({ id })}</div>
+    return (
+      <div>
+        {render({
+          id,
+          duration,
+        })}
+      </div>
+    )
   },
 )

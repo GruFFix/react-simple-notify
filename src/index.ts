@@ -1,6 +1,9 @@
-import { NotifyProvider } from './components/NotifyProvider.tsx'
+import { useNotify } from './hooks/useNotify.tsx'
 
-import { useNotification } from './hooks/useNotification.tsx'
-import { NotifyAlignment } from './types.ts'
+import { NotifyContainers } from './components/NotifyContainers.tsx'
 
-export { NotifyProvider, useNotification, NotifyAlignment }
+import { NotifyAlignment, NotifyRenderArgs } from './types.ts'
+
+export { useNotify, NotifyContainers }
+
+export type { NotifyRenderArgs, NotifyAlignment }

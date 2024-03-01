@@ -1,42 +1,40 @@
-import { createContext, ReactNode } from 'react'
+import { JSX, ReactNode } from 'react'
 
 export enum NotifyAlignment {
-    topLeft = 'top-left',
-    topRight = 'top-right',
-    bottomLeft = 'bottom-left',
-    bottomRight = 'bottom-right',
-    topCenter = 'top-center',
-    bottomCenter = 'bottom-center',
+  topLeft = 'top-left',
+  topRight = 'top-right',
+  bottomLeft = 'bottom-left',
+  bottomRight = 'bottom-right',
+  topCenter = 'top-center',
+  bottomCenter = 'bottom-center',
 }
 
+export interface NotifyRenderArgs {
+  id: string
+  duration: number
+}
+
+export type RenderFunction = (args: NotifyRenderArgs) => ReactNode | JSX.Element
+
 export interface BaseNotifyOptions {
-    duration: number
-    alignment: NotifyAlignment
-    render: ({ id }: { id: string }) => JSX.Element
+  duration: number
+  alignment: NotifyAlignment
+  render: RenderFunction
 }
 
 export interface NotifyOptions extends BaseNotifyOptions {
-    id: string
+  id: string
 }
 
 export interface NotifyContextType {
-    openNotify: (options: Omit<NotifyOptions, 'id'>) => void
-    closeNotify: (id: string) => void
-    closeAllNotify: () => void
+  openNotify: (options: Omit<NotifyOptions, 'id'>) => void
+  closeNotify: (id: string) => void
+  closeAllNotify: () => void
 }
-
-export const NotifyContext = createContext<
-    NotifyContextType | undefined
->(undefined)
-
-export interface NotifyProviderProps {
-    children: ReactNode
-}
-
 export interface NotifyProps extends BaseNotifyOptions {
-    id: string
+  id: string
 }
 
 export type GroupedNotify = {
-    [key in NotifyAlignment]: NotifyOptions[]
+  [key in NotifyAlignment]: NotifyOptions[]
 }

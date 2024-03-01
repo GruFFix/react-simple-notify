@@ -1,13 +1,14 @@
 import { FC, PropsWithChildren, useRef } from 'react'
 
-import {NotifyAlignment} from "../types.ts";
-import {useNotificationAnimations} from "../hooks/useAnimatedElement.ts";
+import { useAnimate } from '../core/hooks/useAnimate.ts'
+
+import { NotifyAlignment } from '../types.ts'
+
+import '../styles.css'
 
 interface NotifyContainerProps {
   alignment: NotifyAlignment
 }
-
-import '../styles.css'
 
 export const NotifyContainer: FC<PropsWithChildren<NotifyContainerProps>> = ({
   alignment,
@@ -15,16 +16,12 @@ export const NotifyContainer: FC<PropsWithChildren<NotifyContainerProps>> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const { isRendered } = useNotificationAnimations(containerRef, alignment)
+  const { isRendered } = useAnimate(containerRef, alignment)
 
-  const containerClassName = `react-notify-container ${alignment}`;
+  const containerClassName = `react-notify-container ${alignment}`
 
   return (
-    <div
-     className={containerClassName}
-      ref={containerRef}
-      key={alignment}
-    >
+    <div className={containerClassName} ref={containerRef} key={alignment}>
       {isRendered && children}
     </div>
   )
