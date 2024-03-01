@@ -2,11 +2,11 @@ import { createUseStore } from '../core/hooks/useStore.ts'
 import { NotifyOptions } from '../types.ts'
 
 type StoreState = {
-  notify: NotifyOptions[]
+  notify: Map<string, NotifyOptions>
 }
 
 const initialState = {
-  notify: [],
+  notify: new Map(),
 }
 
 export const useNotifyStore = createUseStore<StoreState>(initialState)

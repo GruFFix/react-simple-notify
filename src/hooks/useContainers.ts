@@ -7,9 +7,9 @@ export const useContainers = () => {
 
   const [containers, setContainers] = useState<NotifyAlignment[]>([])
 
-  const notifyGrouped = useMemo<GroupedNotify>(
-    () =>
-      notify.get().reduce((acc, notification) => {
+  const notifyGrouped = useMemo<GroupedNotify>(() => {
+    const updatedGroupedNotify = Array.from(notify.get().entries()).reduce(
+      (acc, [, notification]) => {
         const { alignment } = notification
 
         acc[alignment] = acc[alignment] || []
@@ -20,17 +20,20 @@ export const useContainers = () => {
         }
 
         return acc
-      }, {} as GroupedNotify),
-    [containers, notify.get()],
-  )
+      },
+      {} as GroupedNotify,
+    )
+
+    return updatedGroupedNotify
+  }, [containers, notify.get()])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setContainers((prevContainers) => {
         return prevContainers.filter((alignment) =>
-          notify
-            .get()
-            .some((notification) => notification.alignment === alignment),
+          Array.from(notify.get().values()).some(
+            (notification) => notification.alignment === alignment,
+          ),
         )
       })
     }, 150)
