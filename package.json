@@ -1,6 +1,6 @@
 {
   "name": "react-notify",
-  "private": true,
+  "private": false,
   "version": "0.0.1",
   "author": "GruFFix@yandex.ru",
   "type": "module",
