@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/GruFFix/react-notify.git"
+    "url": "https://github.com/GruFFix/react-simple-notify.git"
   },
   "license": "MIT",
   "sideEffects": [
