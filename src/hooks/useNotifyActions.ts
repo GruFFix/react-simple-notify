@@ -12,22 +12,29 @@ export const useNotifyActions = () => {
     (options: Omit<NotifyOptions, 'id'> & { id: string }) => {
       const id = options.id || generateUUID()
 
-      notify.set((currentNotifies) => [...currentNotifies, { ...options, id }])
+      notify.set((currentNotifies) => {
+        const newNotifies = new Map(currentNotifies)
+        newNotifies.set(id, { ...options, id })
+        return newNotifies
+      })
     },
     [notify],
   )
 
   const closeNotify = useCallback(
     (id: string) => {
-      notify.set((currentNotifies) =>
-        currentNotifies.filter((n) => n.id !== id),
-      )
+      notify.set((currentNotifies) => {
+        const newNotifies = new Map(currentNotifies)
+
+        newNotifies.delete(id)
+        return newNotifies
+      })
     },
     [notify],
   )
 
   const closeAllNotify = useCallback(() => {
-    notify.set([])
+    notify.set(new Map())
   }, [notify])
 
   return {
