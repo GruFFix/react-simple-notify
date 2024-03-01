@@ -72,6 +72,7 @@ export const createUseStore = <T extends object>(initialState: T) => {
 
     useEffect(() => {
       const observables = keys.map((key) => store[key])
+
       observables.forEach((observable) => {
         observable.subscribe(rerender)
       })
