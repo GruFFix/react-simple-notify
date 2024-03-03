@@ -15,10 +15,6 @@
     top: 0;
     left: 0;
 
-    * {
-        pointer-events: auto;
-    }
-
     &.top-left {
         align-items: flex-start;
     }
@@ -44,4 +40,8 @@
         align-items: center;
         flex-direction: column-reverse;
     }
+}
+
+.notify {
+    pointer-events: auto;
 }

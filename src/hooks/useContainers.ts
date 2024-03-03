@@ -2,7 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { GroupedNotify, NotifyAlignment } from '../types'
 import { useNotifyStore } from './useNotifyStore'
 
-export const useContainers = () => {
+interface UseContainersProps {
+  unmountMs: number
+}
+
+export const useContainers = ({ unmountMs }: UseContainersProps) => {
   const { notify } = useNotifyStore(['notify'])
 
   const [containers, setContainers] = useState<NotifyAlignment[]>([])
@@ -36,7 +40,7 @@ export const useContainers = () => {
           ),
         )
       })
-    }, 150)
+    }, unmountMs)
 
     return () => clearTimeout(timeout)
   }, [notify.get()])

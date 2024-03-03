@@ -4,4 +4,12 @@ import { NotifyContainers } from './components/NotifyContainers.tsx'
 import type { NotifyRenderArgs } from './types.ts'
 import { NotifyAlignment } from './types.ts'
 
-export { useNotify, NotifyContainers, NotifyAlignment, NotifyRenderArgs }
+import { animationConfig } from './utils/animationConfig.ts'
+
+export {
+  useNotify,
+  NotifyContainers,
+  NotifyAlignment,
+  NotifyRenderArgs,
+  animationConfig,
+}
