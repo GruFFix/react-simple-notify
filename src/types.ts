@@ -12,6 +12,7 @@ export enum NotifyAlignment {
 export interface NotifyRenderArgs {
   id: string
   duration: number
+  onClose: () => void
 }
 
 export type RenderFunction = (args: NotifyRenderArgs) => ReactNode | JSX.Element

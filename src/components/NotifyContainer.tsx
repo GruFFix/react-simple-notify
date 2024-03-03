@@ -4,7 +4,7 @@ import { useAnimate } from '../core/hooks/useAnimate.ts'
 
 import { NotifyAlignment } from '../types.ts'
 
-import '../styles.css'
+import s from '../styles.module.css'
 
 interface NotifyContainerProps {
   alignment: NotifyAlignment
@@ -18,7 +18,7 @@ export const NotifyContainer: FC<PropsWithChildren<NotifyContainerProps>> = ({
 
   const { isRendered } = useAnimate(containerRef, alignment)
 
-  const containerClassName = `react-notify-container ${alignment}`
+  const containerClassName = `${s.container} ${s[alignment]}`
 
   return (
     <div className={containerClassName} ref={containerRef} key={alignment}>

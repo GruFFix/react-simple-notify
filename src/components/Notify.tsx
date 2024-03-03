@@ -21,6 +21,7 @@ export const Notify: React.FC<NotifyProps> = React.memo(
         {render({
           id,
           duration,
+          onClose: () => closeNotify(id),
         })}
       </div>
     )
