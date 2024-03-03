@@ -1,7 +1,7 @@
 # React Simple Notify
 
 ## Introduction
-React Notify is a lightweight, customizable notification library for React applications. It provides an easy way to manage and display notifications within your React application. Utilizing a context provider, React Notify allows for seamless integration and control over how and where your notifications appear on the screen.
+React Simple Notify is a lightweight, customizable notification library for React applications. It provides an easy way to manage and display notifications within your React application. Utilizing a context provider, React Notify allows for seamless integration and control over how and where your notifications appear on the screen.
 
 ## Installation
 Install React Notify using npm or yarn:
@@ -15,9 +15,7 @@ yarn add react-simple-notify
 
 ## Use
 ```jsx
-import { useNotify, NotifyContainers } from 'react-simple-notify'
-import type { NotifyAlignment, NotifyRenderArgs } from 'react-simple-notify'
-import 'react-simple-notify/dist/style.css'
+import { useNotify, NotifyContainers, NotifyAlignment, NotifyRenderArgs } from 'react-simple-notify'
 
 export const App = () => {
   const { notify } =  useNotify()

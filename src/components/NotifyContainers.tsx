@@ -6,7 +6,6 @@ import { Notify } from './Notify.tsx'
 import { useContainers } from '../hooks/useContainers.ts'
 
 import { NotifyAlignment } from '../types.ts'
-import '../styles.css'
 
 export const NotifyContainers = () => {
   const { notifyGrouped, containers } = useContainers()

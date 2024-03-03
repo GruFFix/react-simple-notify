@@ -16,7 +16,6 @@ export const useAnimate = (
     let keyframes = []
     let transformValue = ''
     let startPosition = ''
-    let endPosition = ''
 
     node.setAttribute('style', 'overflow: hidden;')
 
@@ -25,31 +24,32 @@ export const useAnimate = (
       case NotifyAlignment.bottomLeft:
         transformValue = 'translateX'
         startPosition = '-100%'
-        endPosition = '0'
         break
       case NotifyAlignment.bottomCenter:
         transformValue = 'translateY'
         startPosition = '100%'
-        endPosition = '0'
         break
       case NotifyAlignment.topCenter:
         transformValue = 'translateY'
         startPosition = '-100%'
-        endPosition = '0'
         break
       default:
         transformValue = 'translateX'
         startPosition = '100%'
-        endPosition = '0'
         break
     }
 
     keyframes = [
       { transform: `${transformValue}(${startPosition})`, opacity: 0 },
-      { transform: `${transformValue}(${endPosition})`, opacity: 1 },
+      { transform: `${transformValue}(0)`, opacity: 1 },
     ]
 
-    node.animate(keyframes, { duration: 300 }).onfinish = () => {
+    const animationConfig = {
+      duration: 250,
+      easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
+    }
+
+    node.animate(keyframes, animationConfig).onfinish = () => {
       node.removeAttribute('style')
     }
   }
