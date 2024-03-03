@@ -3,21 +3,26 @@ import React, { useEffect } from 'react'
 import { useNotifyActions } from '../hooks/useNotifyActions.ts'
 
 import { NotifyProps } from '../types.ts'
+import s from '../styles.module.css'
 
 export const Notify: React.FC<NotifyProps> = React.memo(
   ({ id, duration, render }) => {
     const { closeNotify } = useNotifyActions()
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        closeNotify(id)
-      }, duration)
+    const isAutoClose = duration > 0
 
-      return () => clearTimeout(timer)
-    }, [id, duration, closeNotify])
+    useEffect(() => {
+      if (isAutoClose) {
+        const timer = setTimeout(() => {
+          closeNotify(id)
+        }, duration)
+
+        return () => clearTimeout(timer)
+      }
+    }, [id, duration, closeNotify, isAutoClose])
 
     return (
-      <div>
+      <div className={s.notify}>
         {render({
           id,
           duration,

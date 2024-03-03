@@ -34,3 +34,24 @@ export interface NotifyProps extends BaseNotifyOptions {
 export type GroupedNotify = {
   [key in NotifyAlignment]: NotifyOptions[]
 }
+
+interface AnimationStageConfig {
+  keyframes: ({
+    node,
+    alignment,
+  }: {
+    node: Element | HTMLElement
+    alignment: NotifyAlignment
+  }) => Keyframe[]
+  easing: string
+  duration: number
+}
+
+export interface AnimationConfig {
+  enter: AnimationStageConfig
+  exit: AnimationStageConfig
+}
+
+export interface ContainersConfig {
+  animationConfig?: AnimationConfig
+}

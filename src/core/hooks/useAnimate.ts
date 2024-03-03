@@ -1,5 +1,7 @@
 import { RefObject, useCallback, useLayoutEffect, useState } from 'react'
-import { NotifyAlignment } from '../../types.ts'
+import { AnimationConfig, NotifyAlignment } from '../../types.ts'
+
+import { animationConfig as defaultAnimationConfig } from '../../utils/animationConfig.ts'
 
 const ATTR_DYNAMIC = 'data-dynamic'
 const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
@@ -7,49 +9,23 @@ const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
 export const useAnimate = (
   containerRef: RefObject<HTMLElement>,
   alignment: NotifyAlignment,
-): { isRendered: boolean } => {
+  animationConfig: AnimationConfig = defaultAnimationConfig,
+): {
+  isRendered: boolean
+} => {
   const [isRendered, setIsRendered] = useState<boolean>(false)
 
   const animateEntrance = (node: Element): void => {
     if (node.hasAttribute(ATTR_DYNAMIC)) return
 
-    let keyframes = []
-    let transformValue = ''
-    let startPosition = ''
+    const {
+      duration = defaultAnimationConfig.enter.duration,
+      easing = defaultAnimationConfig.enter.easing,
+    } = animationConfig.enter
 
-    node.setAttribute('style', 'overflow: hidden;')
+    const keyframes = animationConfig?.enter.keyframes({ node, alignment })
 
-    switch (alignment) {
-      case NotifyAlignment.topLeft:
-      case NotifyAlignment.bottomLeft:
-        transformValue = 'translateX'
-        startPosition = '-100%'
-        break
-      case NotifyAlignment.bottomCenter:
-        transformValue = 'translateY'
-        startPosition = '100%'
-        break
-      case NotifyAlignment.topCenter:
-        transformValue = 'translateY'
-        startPosition = '-100%'
-        break
-      default:
-        transformValue = 'translateX'
-        startPosition = '100%'
-        break
-    }
-
-    keyframes = [
-      { transform: `${transformValue}(${startPosition})`, opacity: 0 },
-      { transform: `${transformValue}(0)`, opacity: 1 },
-    ]
-
-    const animationConfig = {
-      duration: 250,
-      easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-    }
-
-    node.animate(keyframes, animationConfig).onfinish = () => {
+    node.animate(keyframes, { duration, easing }).onfinish = () => {
       node.removeAttribute('style')
     }
   }
@@ -75,13 +51,19 @@ export const useAnimate = (
 
     clone.setAttribute(ATTR_DYNAMIC, 'true')
     clone.setAttribute(ATTR_REMOVAL_IN_PROGRESS, 'true')
-    clone.style.transformOrigin = 'center'
-    clone.style.overflow = 'hidden'
 
-    clone.animate([{ height: `${clone.scrollHeight}px` }, { height: 0 }], {
-      duration: 150,
-      easing: 'linear',
-    }).onfinish = () => clone.remove()
+    const {
+      duration = defaultAnimationConfig.exit.duration,
+      easing = defaultAnimationConfig.exit.easing,
+    } = animationConfig.exit
+
+    const keyframes = animationConfig?.exit.keyframes({
+      node: clone,
+      alignment,
+    })
+
+    clone.animate(keyframes, { duration, easing }).onfinish = () =>
+      clone.remove()
   }
 
   const onMutation = useCallback((mutationsList: MutationRecord[]): void => {
