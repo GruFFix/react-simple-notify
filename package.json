@@ -1,7 +1,7 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "GruFFix@yandex.ru",
   "type": "module",
   "main": "./dist/index.umd.js",
@@ -34,12 +34,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/node": "^20.11.22",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "vite-plugin-dts": "^3.7.3"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^20.11.22",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
@@ -51,6 +50,7 @@
     "prettier": "^3.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
+    "vite-plugin-dts": "^3.7.3",
     "vite-plugin-lib-inject-css": "^2.0.0"
   }
 }
