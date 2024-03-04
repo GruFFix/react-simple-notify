@@ -30,6 +30,7 @@
 
     &.bottom-right {
         flex-direction: column-reverse;
+        align-items: flex-end;
     }
 
     &.top-center {
