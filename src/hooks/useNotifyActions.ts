@@ -9,7 +9,7 @@ export const useNotifyActions = () => {
   const { notify } = useNotifyStore()
 
   const openNotify = useCallback(
-    (options: Omit<NotifyOptions, 'id'> & { id: string }) => {
+    (options: Omit<NotifyOptions, 'id'> & { id?: string }) => {
       const id = options.id || generateUUID()
 
       notify.set((currentNotifies) => {

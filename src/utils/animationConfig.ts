@@ -38,7 +38,7 @@ export const animationConfig: AnimationConfig = {
     },
   },
   exit: {
-    duration: 100,
+    duration: 150,
     easing: 'linear',
     keyframes: ({ node }) => {
       if ('style' in node) {
@@ -46,7 +46,10 @@ export const animationConfig: AnimationConfig = {
         node.style.overflow = 'hidden'
       }
 
-      return [{ height: `${node.scrollHeight}px` }, { height: 0 }]
+      return [
+        { height: `${node.scrollHeight}px`, opacity: 1 },
+        { height: 0, opacity: 0 },
+      ]
     },
   },
 }
