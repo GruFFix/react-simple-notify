@@ -4,7 +4,7 @@ import { IoWarningOutline } from 'react-icons/io5'
 import { IoMdDoneAll } from 'react-icons/io'
 import { MdOutlineErrorOutline } from 'react-icons/md'
 
-import { NotifyRenderArgs } from '../../../src'
+import { NotifyRenderArgs } from 'react-simple-notify'
 
 import { CardBody, Card, Text, Heading, Flex, Icon } from '@chakra-ui/react'
 

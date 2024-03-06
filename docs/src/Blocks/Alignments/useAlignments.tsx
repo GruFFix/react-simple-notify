@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useNotify, NotifyAlignment } from '../../../../src'
+import { useNotify, NotifyAlignment } from 'react-simple-notify'
 
 import { BaseNotify } from '@/components/BaseNotify/BaseNotify.tsx'
 
@@ -44,6 +44,7 @@ export const useAlignments = () => {
 
   const [selectedAlignment, setSelectedAlignment] = useState(types[0].alignment)
 
+  //@ts-ignore
   const onClick = (prop) => {
     notify.open(prop)
 

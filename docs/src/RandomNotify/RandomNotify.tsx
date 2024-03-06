@@ -1,7 +1,7 @@
 import { Icon, Button } from '@chakra-ui/react'
 import { TbArrowsRandom } from 'react-icons/tb'
 
-import { useNotify, NotifyAlignment } from '../../../src'
+import { useNotify, NotifyAlignment } from 'react-simple-notify'
 import { ColorsNotify } from '@/NotifyVariants/ColorsNotify.tsx'
 import { SimpleNotify } from '@/NotifyVariants/SimpleNotify.tsx'
 import { CloseNotify } from '@/NotifyVariants/CloseNotify.tsx'

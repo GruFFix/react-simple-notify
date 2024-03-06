@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NotifyRenderArgs } from '../../../../src'
+import { NotifyRenderArgs } from 'react-simple-notify'
 
 import { CardBody, Card, Text } from '@chakra-ui/react'
 
