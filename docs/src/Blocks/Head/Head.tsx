@@ -1,12 +1,14 @@
 import { Heading, Center } from '@chakra-ui/react'
 
-import { Container, Text, Flex, Divider } from '@chakra-ui/react'
+import { Container, Text, Flex, Divider, Button, Icon } from '@chakra-ui/react'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import cat from '../../../cat.svg'
 
 import { RandomNotify } from '@/RandomNotify/RandomNotify.tsx'
-import { Cat } from '@/components/Cat'
-
-// import { FaGithub, FaNpm } from 'react-icons/fa'
-// import { IoDocumentTextOutline } from 'react-icons/io5'
+import { FaGithub, FaNpm } from 'react-icons/fa'
+import { IoDocumentTextOutline } from 'react-icons/io5'
 
 export const Head = () => {
   return (
@@ -23,7 +25,7 @@ export const Head = () => {
             flexDirection="column"
             alignItems="center"
           >
-            <Cat />
+            <img src={cat} alt="React Simple Notify" width={60} />
             React Simple Notify
           </Heading>
 
@@ -43,35 +45,35 @@ export const Head = () => {
 
         <RandomNotify />
 
-        {/*<Flex justifyContent="center" gap={2} marginTop={10}>*/}
-        {/*  <Button*/}
-        {/*    leftIcon={<Icon as={FaGithub} />}*/}
-        {/*    variant="link"*/}
-        {/*    colorScheme="purple"*/}
-        {/*  >*/}
-        {/*    Github*/}
-        {/*  </Button>*/}
+        <Flex justifyContent="center" gap={2} marginTop={10}>
+          <Button
+            leftIcon={<Icon as={FaGithub} />}
+            variant="link"
+            colorScheme="purple"
+          >
+            Github
+          </Button>
 
-        {/*  <Divider orientation="vertical" borderColor="#c6aafd" />*/}
+          <Divider orientation="vertical" borderColor="#c6aafd" />
 
-        {/*  <Button*/}
-        {/*    leftIcon={<Icon as={FaNpm} />}*/}
-        {/*    variant="link"*/}
-        {/*    colorScheme="purple"*/}
-        {/*  >*/}
-        {/*    Npm*/}
-        {/*  </Button>*/}
+          <Button
+            leftIcon={<Icon as={FaNpm} />}
+            variant="link"
+            colorScheme="purple"
+          >
+            Npm
+          </Button>
 
-        {/*  <Divider orientation="vertical" borderColor="#c6aafd" />*/}
+          <Divider orientation="vertical" borderColor="#c6aafd" />
 
-        {/*  <Button*/}
-        {/*    leftIcon={<Icon as={IoDocumentTextOutline} />}*/}
-        {/*    variant="link"*/}
-        {/*    colorScheme="purple"*/}
-        {/*  >*/}
-        {/*    Docs*/}
-        {/*  </Button>*/}
-        {/*</Flex>*/}
+          <Button
+            leftIcon={<Icon as={IoDocumentTextOutline} />}
+            variant="link"
+            colorScheme="purple"
+          >
+            Docs
+          </Button>
+        </Flex>
       </Center>
     </Container>
   )
