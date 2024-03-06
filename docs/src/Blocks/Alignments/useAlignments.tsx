@@ -2,8 +2,6 @@ import { useState } from 'react'
 
 import { useNotify, NotifyAlignment } from 'react-simple-notify'
 
-import { BaseNotify } from '@/components/BaseNotify/BaseNotify.tsx'
-
 const DURATION = 2500
 
 export const useAlignments = () => {
@@ -13,32 +11,32 @@ export const useAlignments = () => {
     {
       duration: DURATION,
       alignment: NotifyAlignment.topLeft,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.topCenter,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.topRight,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomLeft,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomCenter,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomRight,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
   ]
 
