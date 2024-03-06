@@ -2,8 +2,6 @@ import { useState } from 'react'
 
 import { useNotify, NotifyAlignment } from 'react-simple-notify'
 
-import { BaseNotify } from '@/components/BaseNotify/BaseNotify.tsx'
-
 const DURATION = 2500
 
 export const useAlignments = () => {
@@ -13,38 +11,39 @@ export const useAlignments = () => {
     {
       duration: DURATION,
       alignment: NotifyAlignment.topLeft,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.topCenter,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.topRight,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomLeft,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomCenter,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
     {
       duration: DURATION,
       alignment: NotifyAlignment.bottomRight,
-      render: BaseNotify,
+      render: () => <div>123</div>,
     },
   ]
 
   const [selectedAlignment, setSelectedAlignment] = useState(types[0].alignment)
 
-  //@ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   const onClick = (prop) => {
     notify.open(prop)
 
