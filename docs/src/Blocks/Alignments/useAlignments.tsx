@@ -42,7 +42,8 @@ export const useAlignments = () => {
 
   const [selectedAlignment, setSelectedAlignment] = useState(types[0].alignment)
 
-  //@ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   const onClick = (prop) => {
     notify.open(prop)
 
