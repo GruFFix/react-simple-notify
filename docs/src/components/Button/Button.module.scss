@@ -1,0 +1,34 @@
+@import '../../shared/styles/variables';
+
+.root {
+  padding: 10px 20px;
+  background-color: $color-neutral-dark; // Основной серый цвет
+  border: 1px solid darken($color-neutral-dark, 5%); // Граница чуть темнее для глубины
+  border-radius: 4px; // Скругление углов
+  color: $color-text-light; // Светлый текст для контраста
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; // Плавная анимация для фона и тени
+
+  &:hover {
+    background-color: lighten($color-neutral-dark, 5%); // Светлее при наведении
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); // Добавление тени для "подъема"
+  }
+
+  &:focus {
+    outline: none;
+    border: 1px solid $color-accent-soft-blue; // Опционально, можно добавить акцентный цвет при фокусе
+  }
+
+  &:active {
+    background-color: darken($color-neutral-dark, 5%); // Темнее при нажатии
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); // Меньше тени, имитируя "нажатие"
+  }
+
+  &:disabled {
+    background-color: $color-neutral-light; // Светлый фон для неактивного состояния
+    color: $color-border-light; // Цвет границы для текста, чтобы показать неактивность
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
