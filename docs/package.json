@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/GruFFix/react-simple-notify/settings/pages",
+  "homepage": "https://gruffix.github.io/react-simple-notify",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
