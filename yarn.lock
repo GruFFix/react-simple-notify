@@ -1891,6 +1891,14 @@ react-refresh@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
+react-simple-notify@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-simple-notify/-/react-simple-notify-0.0.8.tgz#484e9d6745b0b50e9635436e7758fd1676be5654"
+  integrity sha512-1svf/0tI1zTHfJyixPKykOVEZV0ylc/kFtD0lOePeS+xiE8tGYbaPOsIVIXnuLLHn+lUU1eUXACjaMKUgvj49A==
+  dependencies:
+    react "^18.2.0"
+    react-dom "^18.2.0"
+
 react-syntax-highlighter@^15.5.0:
   version "15.5.0"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-15.5.0.tgz#4b3eccc2325fa2ec8eff1e2d6c18fa4a9e07ab20"

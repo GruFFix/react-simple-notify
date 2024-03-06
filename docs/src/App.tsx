@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NotifyContainers } from '../../src'
+import { NotifyContainers } from 'react-simple-notify'
 
 import { ChakraProvider, extendTheme, Box } from '@chakra-ui/react'
 import { Head } from '@/Blocks/Head'
