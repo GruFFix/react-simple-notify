@@ -52,6 +52,7 @@ export const Head = () => {
             colorScheme="purple"
           >
             Github
+            {/*https://github.com/GruFFix/react-simple-notify#readme*/}
           </Button>
 
           <Divider orientation="vertical" borderColor="#c6aafd" />
@@ -62,6 +63,7 @@ export const Head = () => {
             colorScheme="purple"
           >
             Npm
+            {/*https://www.npmjs.com/package/react-simple-notify*/}
           </Button>
 
           <Divider orientation="vertical" borderColor="#c6aafd" />
