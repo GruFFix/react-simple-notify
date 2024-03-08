@@ -7,26 +7,26 @@ import { Notify } from './Notify.tsx'
 import { animationConfig as defaultAnimationConfig } from '../utils/animationConfig.ts'
 
 import { useContainers } from '../hooks/useContainers.ts'
-import { AnimationConfig, NotifyAlignment, NotifyProps } from '../types.ts'
+import {
+  NotifyAlignment,
+  NotifyContainersProps,
+  NotifyOptions,
+} from '../types.ts'
 
-interface NotifyContainersProps {
-  animationConfig?: AnimationConfig
-}
-
-interface NotifyContainerProps {
+interface NotifyContainerProps extends NotifyContainersProps {
   alignment: NotifyAlignment
-  animationConfig?: AnimationConfig
-  notifyGroup: NotifyProps[]
+  notifyGroup: NotifyOptions[]
 }
 
 const NotifyContainerComponent: FC<NotifyContainerProps> = ({
   alignment,
   animationConfig,
   notifyGroup,
+  notifyComponent,
 }) => (
   <NotifyContainer alignment={alignment} animationConfig={animationConfig}>
     {notifyGroup.map((notify) => (
-      <Notify key={notify.id} {...notify} />
+      <Notify notifyComponent={notifyComponent} key={notify.id} {...notify} />
     ))}
   </NotifyContainer>
 )
@@ -44,8 +44,9 @@ const areEqual = (
 const MemoizedNotifyContainer = memo(NotifyContainerComponent, areEqual)
 
 export const NotifyContainers: FC<NotifyContainersProps> = memo(
-  ({ animationConfig }) => {
+  ({ animationConfig, notifyComponent, defaultAlignment }) => {
     const { notifyGrouped, containers } = useContainers({
+      // defaultAlignment: defaultAlignment || NotifyAlignment.bottomLeft,
       unmountMs:
         animationConfig?.exit.duration || defaultAnimationConfig.exit.duration,
     })
@@ -54,9 +55,10 @@ export const NotifyContainers: FC<NotifyContainersProps> = memo(
       createPortal(
         <MemoizedNotifyContainer
           key={alignment}
-          alignment={alignment as NotifyAlignment}
+          alignment={alignment || defaultAlignment}
           animationConfig={animationConfig}
           notifyGroup={notifyGrouped?.[alignment] || []}
+          notifyComponent={notifyComponent}
         />,
         document.body,
         alignment,

@@ -12,7 +12,7 @@ export const useContainers = ({ unmountMs }: UseContainersProps) => {
   const [containers, setContainers] = useState<NotifyAlignment[]>([])
 
   const notifyGrouped = useMemo<GroupedNotify>(() => {
-    const updatedGroupedNotify = Array.from(notify.get().entries()).reduce(
+    return Array.from(notify.get().entries()).reduce(
       (acc, [, notification]) => {
         const { alignment } = notification
 
@@ -27,8 +27,6 @@ export const useContainers = ({ unmountMs }: UseContainersProps) => {
       },
       {} as GroupedNotify,
     )
-
-    return updatedGroupedNotify
   }, [containers, notify.get()])
 
   useEffect(() => {

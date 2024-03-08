@@ -14,7 +14,9 @@ export const useNotifyActions = () => {
 
       notify.set((currentNotifies) => {
         const newNotifies = new Map(currentNotifies)
+
         newNotifies.set(id, { ...options, id })
+
         return newNotifies
       })
     },
@@ -27,6 +29,7 @@ export const useNotifyActions = () => {
         const newNotifies = new Map(currentNotifies)
 
         newNotifies.delete(id)
+
         return newNotifies
       })
     },
