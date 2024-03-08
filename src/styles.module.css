@@ -2,7 +2,7 @@
     position: fixed;
     z-index: 1000;
     display: flex;
-    max-height: 100vh;
+    max-height: 100svh;
     padding: 10px;
     overflow-x: hidden;
     overflow-y: auto;

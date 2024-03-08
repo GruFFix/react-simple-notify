@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from 'react'
+import { FC, JSX, ReactElement, ReactNode } from 'react'
 
 export enum NotifyAlignment {
   topLeft = 'top-left',
@@ -17,18 +17,12 @@ export interface NotifyRenderArgs {
 
 export type RenderFunction = (args: NotifyRenderArgs) => ReactNode | JSX.Element
 
-export interface BaseNotifyOptions {
-  duration: number
+export interface NotifyOptions {
+  id: string
+  duration?: number
   alignment: NotifyAlignment
-  render: RenderFunction
-}
-
-export interface NotifyOptions extends BaseNotifyOptions {
-  id: string
-}
-
-export interface NotifyProps extends BaseNotifyOptions {
-  id: string
+  render?: RenderFunction
+  variant?: string
 }
 
 export type GroupedNotify = {
@@ -52,6 +46,8 @@ export interface AnimationConfig {
   exit: AnimationStageConfig
 }
 
-export interface ContainersConfig {
+export interface NotifyContainersProps {
   animationConfig?: AnimationConfig
+  notifyComponent?: FC<NotifyRenderArgs> | ReactElement
+  defaultAlignment?: NotifyAlignment
 }
