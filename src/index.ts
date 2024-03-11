@@ -5,6 +5,12 @@ import type { NotifyRenderArgs } from './types.ts'
 import { NotifyAlignment } from './types.ts'
 
 import { animationConfig } from './utils/animationConfig.ts'
+import { setConfig, resetConfig } from './utils/configManager.ts'
+
+const config = {
+  set: setConfig,
+  reset: resetConfig,
+}
 
 export {
   useNotify,
@@ -12,4 +18,5 @@ export {
   NotifyAlignment,
   NotifyRenderArgs,
   animationConfig,
+  config,
 }
