@@ -1,5 +1,5 @@
 import { Observable } from './observable.ts'
-import { NotifyOptions } from '../types.ts'
+import { NotifyAlignment, NotifyOptions } from '../types.ts'
 import { configObservable } from './configManager.ts'
 
 interface GroupedNotify {
@@ -11,10 +11,14 @@ const groupTimers: { [key: string]: NodeJS.Timeout } = {}
 export const notifyObservable = new Observable<GroupedNotify>({})
 
 export const openNotify = (
-  options: Omit<NotifyOptions, 'id'> & { id?: string },
+  options: Omit<NotifyOptions, 'id' | 'duration' | 'alignment'> & {
+    id?: string
+    duration?: number
+    alignment?: NotifyAlignment
+  },
 ) => {
   const id = Math.random().toString(36).substring(2, 15)
-  const duration = options.duration || 5000
+  const duration = options.duration || 3500
   const alignment = options.alignment || configObservable.get().alignment
 
   const newNotify = { ...options, id, duration, alignment }
