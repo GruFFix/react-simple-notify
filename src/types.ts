@@ -1,4 +1,4 @@
-import { FC, JSX, ReactElement, ReactNode } from 'react'
+import { FC, JSX, PropsWithChildren, ReactNode } from 'react'
 
 export enum NotifyAlignment {
   topLeft = 'top-left',
@@ -21,7 +21,7 @@ export interface NotifyOptions {
   id: string
   duration?: number
   alignment: NotifyAlignment
-  render?: RenderFunction
+  render: RenderFunction
   variant?: string
 }
 
@@ -46,8 +46,9 @@ export interface AnimationConfig {
   exit: AnimationStageConfig
 }
 
-export interface NotifyContainersProps {
-  animationConfig?: AnimationConfig
-  notifyComponent?: FC<NotifyRenderArgs> | ReactElement
-  defaultAlignment?: NotifyAlignment
+export interface ConfigProps {
+  animationConfig: AnimationConfig
+  notifyComponent: FC<PropsWithChildren<NotifyRenderArgs>>
+  alignment: NotifyAlignment
+  reverse: boolean
 }

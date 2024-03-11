@@ -1,12 +1,10 @@
-import { useNotifyActions } from './useNotifyActions.ts'
+import { openNotify, closeNotify } from '../utils/notifiesManager.ts'
 
 export const useNotify = () => {
-  const { openNotify, closeNotify, closeAllNotify } = useNotifyActions()
-
   const notify = {
     open: openNotify,
     close: closeNotify,
-    closeAll: closeAllNotify,
+    closeAll: () => {},
   }
 
   return { notify }

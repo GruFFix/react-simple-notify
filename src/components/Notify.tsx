@@ -1,17 +1,15 @@
 import React, { memo, useEffect } from 'react'
 
-import { useNotifyActions } from '../hooks/useNotifyActions.ts'
+import { closeNotify } from '../utils/notifiesManager.ts'
+import { configObservable } from '../utils/configManager.ts'
 
-import { NotifyContainersProps, NotifyOptions } from '../types.ts'
+import { NotifyOptions } from '../types.ts'
+
 import s from '../styles.module.css'
 
-interface NotifyComponentProps extends NotifyOptions {
-  notifyComponent?: NotifyContainersProps['notifyComponent']
-}
-
-export const Notify: React.FC<NotifyComponentProps> = memo(
-  ({ id, duration = 0, render, notifyComponent }) => {
-    const { closeNotify } = useNotifyActions()
+export const Notify: React.FC<NotifyOptions> = memo(
+  ({ id, duration = 0, render }) => {
+    const { notifyComponent } = configObservable.get()
 
     const isAutoClose = duration > 0
 
@@ -23,7 +21,7 @@ export const Notify: React.FC<NotifyComponentProps> = memo(
 
         return () => clearTimeout(timer)
       }
-    }, [id, duration, closeNotify, isAutoClose])
+    }, [id, duration, isAutoClose])
 
     const params = {
       id,
@@ -31,22 +29,14 @@ export const Notify: React.FC<NotifyComponentProps> = memo(
       onClose: () => closeNotify(id),
     }
 
-    let renderComponent
+    let content = render(params)
 
-    if (render) {
-      renderComponent = render(params)
+    if (typeof notifyComponent === 'function') {
+      content = notifyComponent({ ...params, children: content })
     } else if (React.isValidElement(notifyComponent)) {
-      renderComponent = React.cloneElement(notifyComponent, params)
-    } else if (typeof notifyComponent === 'function') {
-      renderComponent = notifyComponent(params)
-    } else {
-      renderComponent = null
+      content = React.cloneElement(notifyComponent, params, content)
     }
 
-    if (renderComponent) {
-      return <div className={s.notify}>{renderComponent}</div>
-    }
-
-    return null
+    return <div className={s.notify}>{content}</div>
   },
 )

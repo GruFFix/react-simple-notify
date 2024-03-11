@@ -1,35 +1,16 @@
-import { FC, memo } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { NotifyContainer } from './NotifyContainer.tsx'
 import { Notify } from './Notify.tsx'
 
-import { animationConfig as defaultAnimationConfig } from '../utils/animationConfig.ts'
+import { NotifyAlignment, NotifyOptions } from '../types.ts'
+import { notifyObservable } from '../utils/notifiesManager.ts'
 
-import { useContainers } from '../hooks/useContainers.ts'
-import {
-  NotifyAlignment,
-  NotifyContainersProps,
-  NotifyOptions,
-} from '../types.ts'
-
-interface NotifyContainerProps extends NotifyContainersProps {
-  alignment: NotifyAlignment
+interface NotifyContainerProps {
   notifyGroup: NotifyOptions[]
+  alignment: NotifyAlignment
 }
-
-const NotifyContainerComponent: FC<NotifyContainerProps> = ({
-  alignment,
-  animationConfig,
-  notifyGroup,
-  notifyComponent,
-}) => (
-  <NotifyContainer alignment={alignment} animationConfig={animationConfig}>
-    {notifyGroup.map((notify) => (
-      <Notify notifyComponent={notifyComponent} key={notify.id} {...notify} />
-    ))}
-  </NotifyContainer>
-)
 
 const areEqual = (
   prevProps: NotifyContainerProps,
@@ -41,28 +22,45 @@ const areEqual = (
   )
 }
 
-const MemoizedNotifyContainer = memo(NotifyContainerComponent, areEqual)
+const NotifyContainerComponent: FC<NotifyContainerProps> = memo(
+  ({ notifyGroup, alignment }) => (
+    <NotifyContainer alignment={alignment}>
+      {notifyGroup.map((notify) => (
+        <Notify key={notify.id} {...notify} />
+      ))}
+    </NotifyContainer>
+  ),
+  areEqual,
+)
 
-export const NotifyContainers: FC<NotifyContainersProps> = memo(
-  ({ animationConfig, notifyComponent, defaultAlignment }) => {
-    const { notifyGrouped, containers } = useContainers({
-      // defaultAlignment: defaultAlignment || NotifyAlignment.bottomLeft,
-      unmountMs:
-        animationConfig?.exit.duration || defaultAnimationConfig.exit.duration,
+const useRerender = () => {
+  const [, setState] = useState({})
+  return useCallback(() => setState({}), [])
+}
+
+export const NotifyContainers: FC = memo(() => {
+  const rerender = useRerender()
+
+  useEffect(() => {
+    const unsubscribe = notifyObservable.subscribe(() => {
+      rerender()
     })
 
-    return containers.map((alignment) =>
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
+  return Object.entries(notifyObservable.get()).map(
+    ([alignment, notifications]) =>
       createPortal(
-        <MemoizedNotifyContainer
+        <NotifyContainerComponent
+          alignment={alignment as NotifyAlignment}
           key={alignment}
-          alignment={alignment || defaultAlignment}
-          animationConfig={animationConfig}
-          notifyGroup={notifyGrouped?.[alignment] || []}
-          notifyComponent={notifyComponent}
+          notifyGroup={notifications}
         />,
         document.body,
         alignment,
       ),
-    )
-  },
-)
+  )
+})

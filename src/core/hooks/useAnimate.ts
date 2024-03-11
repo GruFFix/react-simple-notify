@@ -1,7 +1,7 @@
 import { RefObject, useCallback, useLayoutEffect, useState } from 'react'
-import { AnimationConfig, NotifyAlignment } from '../../types.ts'
+import { NotifyAlignment } from '../../types.ts'
 
-import { animationConfig as defaultAnimationConfig } from '../../utils/animationConfig.ts'
+import { configObservable } from '../../utils/configManager.ts'
 
 const ATTR_DYNAMIC = 'data-dynamic'
 const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
@@ -9,23 +9,21 @@ const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
 export const useAnimate = (
   containerRef: RefObject<HTMLElement>,
   alignment: NotifyAlignment,
-  animationConfig: AnimationConfig = defaultAnimationConfig,
 ): {
   isRendered: boolean
 } => {
+  const { animationConfig } = configObservable.get()
+
   const [isRendered, setIsRendered] = useState<boolean>(false)
 
   const animateEntrance = (node: Element): void => {
     if (node.hasAttribute(ATTR_DYNAMIC)) return
 
-    const {
-      duration = defaultAnimationConfig.enter.duration,
-      easing = defaultAnimationConfig.enter.easing,
-    } = animationConfig.enter
+    const { duration, easing, keyframes } = animationConfig.enter
 
-    const keyframes = animationConfig?.enter.keyframes({ node, alignment })
+    const frames = keyframes({ node, alignment })
 
-    node.animate(keyframes, { duration, easing }).onfinish = () => {
+    node.animate(frames, { duration, easing }).onfinish = () => {
       node.removeAttribute('style')
     }
   }
@@ -52,18 +50,11 @@ export const useAnimate = (
     clone.setAttribute(ATTR_DYNAMIC, 'true')
     clone.setAttribute(ATTR_REMOVAL_IN_PROGRESS, 'true')
 
-    const {
-      duration = defaultAnimationConfig.exit.duration,
-      easing = defaultAnimationConfig.exit.easing,
-    } = animationConfig.exit
+    const { duration, easing, keyframes } = animationConfig.exit
 
-    const keyframes = animationConfig?.exit.keyframes({
-      node: clone,
-      alignment,
-    })
+    const frames = keyframes({ node: clone, alignment })
 
-    clone.animate(keyframes, { duration, easing }).onfinish = () =>
-      clone.remove()
+    clone.animate(frames, { duration, easing }).onfinish = () => clone.remove()
   }
 
   const onMutation = useCallback((mutationsList: MutationRecord[]): void => {

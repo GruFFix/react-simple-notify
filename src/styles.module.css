@@ -6,40 +6,68 @@
     padding: 10px;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100vh;
     box-sizing: border-box;
     pointer-events: none;
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    top: 0;
     left: 0;
 
     &.top-left {
         align-items: flex-start;
+        top: 0;
+
+        &.reverse {
+            flex-direction: column-reverse;
+        }
     }
 
     &.top-right {
         align-items: flex-end;
+        top: 0;
+
+        &.reverse {
+            flex-direction: column-reverse;
+        }
     }
 
     &.bottom-left {
         flex-direction: column-reverse;
         align-items: flex-start;
+        bottom: 0;
+
+        &.reverse {
+            flex-direction: column;
+        }
     }
 
     &.bottom-right {
         flex-direction: column-reverse;
         align-items: flex-end;
+        bottom: 0;
+
+        &.reverse {
+            flex-direction: column;
+        }
     }
 
     &.top-center {
         align-items: center;
+        top: 0;
+
+        &.reverse {
+            flex-direction: column-reverse;
+        }
     }
 
     &.bottom-center {
         align-items: center;
         flex-direction: column-reverse;
+        bottom: 0;
+
+        &.reverse {
+            flex-direction: column;
+        }
     }
 }
 
