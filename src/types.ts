@@ -12,6 +12,8 @@ export enum NotifyAlignment {
 export interface NotifyRenderArgs {
   id: string
   duration: number
+  alignment: NotifyAlignment
+  variant?: string
   onClose: () => void
 }
 

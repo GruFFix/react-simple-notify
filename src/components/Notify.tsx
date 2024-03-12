@@ -8,7 +8,7 @@ import { NotifyOptions } from '../types.ts'
 import s from '../styles.module.css'
 
 export const Notify: React.FC<NotifyOptions> = memo(
-  ({ id, duration = 0, render }) => {
+  ({ id, duration = 0, render, variant, alignment }) => {
     const { notifyComponent } = configObservable.get()
 
     const isAutoClose = duration > 0
@@ -26,6 +26,8 @@ export const Notify: React.FC<NotifyOptions> = memo(
     const params = {
       id,
       duration,
+      variant,
+      alignment,
       onClose: () => closeNotify(id),
     }
 
