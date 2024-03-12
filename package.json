@@ -1,7 +1,7 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "GruFFix@yandex.ru",
   "homepage": "http://rsn.gruffix.ru",
   "type": "module",
