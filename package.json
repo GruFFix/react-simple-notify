@@ -1,9 +1,9 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.14",
+  "version": "0.0.15",
   "author": "GruFFix@yandex.ru",
-  "homepage": "http://rsn.gruffix.ru/",
+  "homepage": "http://rsn.gruffix.ru",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
