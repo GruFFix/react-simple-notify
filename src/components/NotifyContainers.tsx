@@ -8,7 +8,7 @@ import { NotifyAlignment, NotifyOptions } from '../types.ts'
 import { notifyObservable } from '../utils/notifiesManager.ts'
 
 interface NotifyContainerProps {
-  notifyGroup: NotifyOptions[]
+  notifyGroup: Map<string, NotifyOptions>
   alignment: NotifyAlignment
 }
 
@@ -18,14 +18,14 @@ const areEqual = (
 ) => {
   return (
     prevProps.alignment === nextProps.alignment &&
-    prevProps.notifyGroup.length === nextProps.notifyGroup.length
+    prevProps.notifyGroup.size === nextProps.notifyGroup.size
   )
 }
 
 const NotifyContainerComponent: FC<NotifyContainerProps> = memo(
   ({ notifyGroup, alignment }) => (
     <NotifyContainer alignment={alignment}>
-      {notifyGroup.map((notify) => (
+      {Array.from(notifyGroup.values()).map((notify) => (
         <Notify key={notify.id} {...notify} />
       ))}
     </NotifyContainer>

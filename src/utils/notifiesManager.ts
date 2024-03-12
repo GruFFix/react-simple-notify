@@ -3,7 +3,7 @@ import { NotifyAlignment, NotifyOptions } from '../types.ts'
 import { configObservable } from './configManager.ts'
 
 interface GroupedNotify {
-  [key: string]: NotifyOptions[]
+  [key: string]: Map<string, NotifyOptions>
 }
 
 const groupTimers: { [key: string]: NodeJS.Timeout } = {}
@@ -17,8 +17,8 @@ export const openNotify = (
     alignment?: NotifyAlignment
   },
 ) => {
-  const id = Math.random().toString(36).substring(2, 15)
-  const duration = options.duration || 3500
+  const id = options.id || Math.random().toString(36).substring(2, 15)
+  const duration = options.duration !== undefined ? options.duration : 3500
   const alignment = options.alignment || configObservable.get().alignment
 
   const newNotify = { ...options, id, duration, alignment }
@@ -31,10 +31,14 @@ export const openNotify = (
         clearTimeout(groupTimers[alignment])
         delete groupTimers[alignment]
       }
-      updated[alignment] = [...updated[alignment], newNotify]
+
+      const newMap = new Map(updated[alignment])
+      newMap.set(id, newNotify)
+      updated[alignment] = newMap
     } else {
-      updated[alignment] = [newNotify]
+      updated[alignment] = new Map([[id, newNotify]])
     }
+
     return updated
   })
 }
@@ -46,22 +50,39 @@ export const closeNotify = (id: string) => {
     const updated = { ...prev }
 
     Object.keys(updated).forEach((alignment) => {
-      updated[alignment] = updated[alignment].filter(
-        (notify) => notify.id !== id,
-      )
+      if (updated[alignment].has(id)) {
+        const newMap = new Map(
+          Array.from(updated[alignment]).filter(
+            ([notifyId]) => notifyId !== id,
+          ),
+        )
 
-      if (updated[alignment].length === 0) {
-        groupTimers[alignment] = setTimeout(() => {
-          notifyObservable.set((prev) => {
-            const updated = { ...prev }
-            delete updated[alignment]
-            return updated
-          })
-          delete groupTimers[alignment]
-        }, animationConfig.exit.duration + 1000)
+        updated[alignment] = newMap
+
+        if (newMap.size === 0) {
+          groupTimers[alignment] = setTimeout(() => {
+            notifyObservable.set((prev) => {
+              const updated = { ...prev }
+              delete updated[alignment]
+              return updated
+            })
+            delete groupTimers[alignment]
+          }, animationConfig.exit.duration + 1000)
+        }
       }
     })
 
     return updated
   })
+}
+
+export const closeAll = () => {
+  // Очистка всех таймеров перед сбросом состояния
+  Object.keys(groupTimers).forEach((alignment) => {
+    clearTimeout(groupTimers[alignment])
+    delete groupTimers[alignment]
+  })
+
+  // Сброс состояния уведомлений
+  notifyObservable.set(() => ({}))
 }

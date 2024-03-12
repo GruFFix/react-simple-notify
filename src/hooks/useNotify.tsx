@@ -1,10 +1,10 @@
-import { openNotify, closeNotify } from '../utils/notifiesManager.ts'
+import { openNotify, closeNotify, closeAll } from '../utils/notifiesManager.ts'
 
 export const useNotify = () => {
   const notify = {
     open: openNotify,
     close: closeNotify,
-    closeAll: () => {},
+    closeAll: closeAll,
   }
 
   return { notify }
