@@ -4,11 +4,10 @@ import { Container, Text, Flex, Divider, Button, Icon } from '@chakra-ui/react'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-import cat from '../../../cat.svg'
+import cat from '../../cat.svg'
 
 import { RandomNotify } from '@/RandomNotify/RandomNotify.tsx'
 import { FaGithub, FaNpm } from 'react-icons/fa'
-import { IoDocumentTextOutline } from 'react-icons/io5'
 
 export const Head = () => {
   return (
@@ -37,9 +36,8 @@ export const Head = () => {
             fontWeight={500}
             color="#727171"
           >
-            lightweight and easy-to-use notification library for React
-            applications. It allows developers to effortlessly integrate
-            customizable notifications into their web projects.
+            A versatile notification library for React applications, allowing
+            for easy creation, configuration, and management of notifications.
           </Text>
         </Flex>
 
@@ -47,6 +45,12 @@ export const Head = () => {
 
         <Flex justifyContent="center" gap={2} marginTop={10}>
           <Button
+            onClick={() =>
+              window.open(
+                'https://github.com/GruFFix/react-simple-notify',
+                '_blank',
+              )
+            }
             leftIcon={<Icon as={FaGithub} />}
             variant="link"
             colorScheme="purple"
@@ -57,21 +61,17 @@ export const Head = () => {
           <Divider orientation="vertical" borderColor="#c6aafd" />
 
           <Button
+            onClick={() =>
+              window.open(
+                'https://www.npmjs.com/package/react-simple-notify',
+                '_blank',
+              )
+            }
             leftIcon={<Icon as={FaNpm} />}
             variant="link"
             colorScheme="purple"
           >
             Npm
-          </Button>
-
-          <Divider orientation="vertical" borderColor="#c6aafd" />
-
-          <Button
-            leftIcon={<Icon as={IoDocumentTextOutline} />}
-            variant="link"
-            colorScheme="purple"
-          >
-            Docs
           </Button>
         </Flex>
       </Center>

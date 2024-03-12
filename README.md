@@ -1,4 +1,4 @@
-![Logo](https://repository-images.githubusercontent.com/765200491/61230139-c1ae-4440-a57f-bb404142d495)
+![Logo](https://repository-images.githubusercontent.com/765200491/0b4162c0-8e67-4b8d-9d53-58b50c65c0f3)
 ### [DEMO](http://rsn.gruffix.ru/)
 
 # React Simple Notify
@@ -14,7 +14,6 @@ yarn add react-simple-notify
 
 ## Simple usage
 ```jsx
-import React from 'react';
 import { notify, NotifyContainers } from 'react-simple-notify';
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
     notify.open({
       render: ({ onClose }) => (
         <div>
-          This is a notification!
+          This is a notify!
           <button onClick={onClose}>Close</button>
         </div>
       ),
@@ -31,7 +30,7 @@ function App() {
 
   return (
     <>
-      <button onClick={showNotification}>Show Notification</button>
+      <button onClick={showNotification}>Show Notify</button>
       <NotifyContainers />
     </>
   );
