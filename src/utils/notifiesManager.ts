@@ -77,12 +77,10 @@ export const closeNotify = (id: string) => {
 }
 
 export const closeAll = () => {
-  // Очистка всех таймеров перед сбросом состояния
   Object.keys(groupTimers).forEach((alignment) => {
     clearTimeout(groupTimers[alignment])
     delete groupTimers[alignment]
   })
 
-  // Сброс состояния уведомлений
   notifyObservable.set(() => ({}))
 }
