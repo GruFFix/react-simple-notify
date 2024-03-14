@@ -1,41 +1,93 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { NotifyContainers } from 'react-simple-notify'
+import {
+  notify,
+  NotifyAlignment,
+  NotifyContainers,
+  animationConfig,
+} from '../../src'
 
-import { ChakraProvider, extendTheme, Box } from '@chakra-ui/react'
-import { Head } from '@/Head'
-
-const theme = extendTheme({
-  fonts: {
-    heading: `"Montserrat", sans-serif`,
-    body: `"Montserrat", sans-serif`,
-  },
-  styles: {
-    global: {
-      // Здесь вы можете указать любые глобальные CSS свойства
-      body: {
-        background: 'linear-gradient(to bottom right, #f1f5f9, #cfe1f2)',
-        bg: '#f1f5f9', // Установка цвета фона для всего тела страницы
-      },
-    },
-  },
-  components: {
-    Heading: {
-      baseStyle: {
-        color: '#a87ffb',
-      },
-    },
-  },
-})
+import { Welcome } from '@/components/StepsNotifies/Welcome/Welcome.tsx'
+import { Alignment } from '@/components/StepsNotifies/Alignment/Alignment.tsx'
+import { Duration } from '@/components/StepsNotifies/Duration'
+import { Render } from '@/components/StepsNotifies/Render'
 
 export const App: FC = () => {
-  return (
-    <ChakraProvider theme={theme}>
-      <Box>
-        <Head />
+  const [step, setStep] = useState(0)
 
-        <NotifyContainers />
-      </Box>
-    </ChakraProvider>
-  )
+  const nextStep = () => {
+    setTimeout(() => {
+      setStep((prev) => {
+        return prev === 3 ? 0 : prev + 1
+      })
+    }, animationConfig.exit.duration)
+  }
+
+  useEffect(() => {
+    if (step === 0) {
+      notify.open({
+        id: '0',
+        alignment: NotifyAlignment.bottomCenter,
+        duration: 0,
+        render: ({ onClose }) => (
+          <Welcome
+            onNextStep={() => {
+              onClose()
+              nextStep()
+            }}
+          />
+        ),
+      })
+    }
+
+    if (step === 1) {
+      notify.open({
+        id: '1',
+        alignment: NotifyAlignment.bottomCenter,
+        duration: 0,
+        render: ({ onClose }) => (
+          <Alignment
+            onNextStep={() => {
+              onClose()
+              nextStep()
+            }}
+          />
+        ),
+      })
+    }
+
+    if (step === 2) {
+      notify.open({
+        id: '2',
+        alignment: NotifyAlignment.bottomCenter,
+        duration: 0,
+        render: ({ onClose }) => (
+          <Duration
+            onNextStep={() => {
+              onClose()
+              nextStep()
+            }}
+          />
+        ),
+      })
+    }
+
+    if (step === 3) {
+      notify.open({
+        id: '3',
+        alignment: NotifyAlignment.bottomCenter,
+        duration: 0,
+        render: ({ onClose }) => (
+          <Render
+            onNextStep={() => {
+              onClose()
+              nextStep()
+            }}
+          />
+        ),
+      })
+    }
+  }, [step])
+
+  return <NotifyContainers />
 }

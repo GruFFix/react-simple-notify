@@ -78,6 +78,20 @@ Sets the global configuration for notifications.
 ### config.reset()
 Resets the global configuration for notifications to their default values. This function does not take any parameters.
 
+## Customizing Notification Container Styles
+`--rsn-container-padding:` Sets the padding around the notification container. Defaults to `10px`, allowing you to control the space between the screen's edge and the notifications.
+
+`--rsn-container-gap:` Defines the gap between individual notifications. The default value is `10px`, which you can adjust to manage the spacing between notifications for visual clarity.
+
+### example
+```css
+:root {
+    --rsn-container-padding: 15px;
+    --rsn-container-gap: 15px;
+}
+```
+
+
 
 ## Example of Custom AnimationConfig:
 ```javascript

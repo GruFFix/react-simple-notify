@@ -1,0 +1,32 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+
+  .cover {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: url('../../../cat.svg');
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: center 7px;
+    background-color: #d0dff3;
+  }
+
+  .leftSide {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .name {
+    color: #666666;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .time {
+    color: rgba(#666666, .6);
+    font-size: 12px;
+  }
+}

@@ -3,15 +3,15 @@
     z-index: 1000;
     display: flex;
     max-height: 100svh;
-    padding: 10px;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
     pointer-events: none;
     flex-direction: column;
-    gap: 10px;
     width: 100%;
     left: 0;
+    padding: var(--rsn-container-padding, 10px);
+    gap: var(--rsn-container-gap, 10px);
 
     &.top-left {
         align-items: flex-start;
