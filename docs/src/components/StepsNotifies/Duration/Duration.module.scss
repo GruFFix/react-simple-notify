@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.description {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 5px;
+}
+
+.buttons {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.content {
+  margin-top: 21px;
+}
+
+.alignmentNotifyExample {
+  width: auto;
+}
+
+.alignmentNotify {
+  width: 425px;
+}
+
+.nextButton {
+  margin-top: 15px;
+
+  > button {
+    width: 100%;
+  }
+}
