@@ -1,7 +1,7 @@
 import s from './Duration.module.scss'
 import { Button } from '@/components/Button'
 import { FC, useEffect, useState } from 'react'
-import { NotifyAlignment, notify } from '../../../../../src'
+import { NotifyAlignment, notify, NotifyRenderArgs } from 'react-simple-notify'
 import { Notify } from '@/components/Notify'
 import { HeaderNotify } from '@/components/HeaderNotify'
 import { IoCloseSharp } from 'react-icons/io5'
@@ -102,7 +102,7 @@ export const Duration: FC<WelcomeProps> = ({ onNextStep }) => {
             onClick={() =>
               notify.open({
                 ...i,
-                render: ({ duration, onClose }) => (
+                render: ({ duration, onClose }: NotifyRenderArgs) => (
                   <CountDown onClose={onClose} duration={duration} />
                 ),
               })

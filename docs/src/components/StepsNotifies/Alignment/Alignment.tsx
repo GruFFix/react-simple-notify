@@ -1,7 +1,7 @@
 import s from './Alignment.module.scss'
 import { Button } from '@/components/Button'
 import { FC } from 'react'
-import { NotifyAlignment, notify } from '../../../../../src'
+import { NotifyAlignment, notify } from 'react-simple-notify'
 import { Notify } from '@/components/Notify'
 import { HeaderNotify } from '@/components/HeaderNotify'
 

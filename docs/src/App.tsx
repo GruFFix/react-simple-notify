@@ -5,7 +5,8 @@ import {
   NotifyAlignment,
   NotifyContainers,
   animationConfig,
-} from '../../src'
+  NotifyRenderArgs,
+} from 'react-simple-notify'
 
 import { Welcome } from '@/components/StepsNotifies/Welcome/Welcome.tsx'
 import { Alignment } from '@/components/StepsNotifies/Alignment/Alignment.tsx'
@@ -30,7 +31,7 @@ export const App: FC = () => {
         id: '0',
         alignment: NotifyAlignment.bottomCenter,
         duration: 0,
-        render: ({ onClose }) => (
+        render: ({ onClose }: NotifyRenderArgs) => (
           <Welcome
             onNextStep={() => {
               onClose()
@@ -46,7 +47,7 @@ export const App: FC = () => {
         id: '1',
         alignment: NotifyAlignment.bottomCenter,
         duration: 0,
-        render: ({ onClose }) => (
+        render: ({ onClose }: NotifyRenderArgs) => (
           <Alignment
             onNextStep={() => {
               onClose()
@@ -62,7 +63,7 @@ export const App: FC = () => {
         id: '2',
         alignment: NotifyAlignment.bottomCenter,
         duration: 0,
-        render: ({ onClose }) => (
+        render: ({ onClose }: NotifyRenderArgs) => (
           <Duration
             onNextStep={() => {
               onClose()
@@ -78,7 +79,7 @@ export const App: FC = () => {
         id: '3',
         alignment: NotifyAlignment.bottomCenter,
         duration: 0,
-        render: ({ onClose }) => (
+        render: ({ onClose }: NotifyRenderArgs) => (
           <Render
             onNextStep={() => {
               onClose()
@@ -94,7 +95,7 @@ export const App: FC = () => {
         id: '4',
         alignment: NotifyAlignment.bottomCenter,
         duration: 0,
-        render: ({ onClose }) => (
+        render: ({ onClose }: NotifyRenderArgs) => (
           <Finish
             onNextStep={() => {
               onClose()

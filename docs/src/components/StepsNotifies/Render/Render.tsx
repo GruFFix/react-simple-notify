@@ -1,9 +1,11 @@
 import s from './Render.module.scss'
 import { Button } from '@/components/Button'
 import { FC, useEffect } from 'react'
-import { NotifyAlignment, notify } from '../../../../../src'
+import { NotifyAlignment, notify } from 'react-simple-notify'
 import { Notify } from '@/components/Notify'
 import { HeaderNotify } from '@/components/HeaderNotify'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import cat from '../../../../cat.svg'
 
 interface WelcomeProps {
