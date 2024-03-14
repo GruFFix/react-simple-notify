@@ -1,6 +1,6 @@
 import s from './Render.module.scss'
 import { Button } from '@/components/Button'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { NotifyAlignment, notify } from '../../../../../src'
 import { Notify } from '@/components/Notify'
 import { HeaderNotify } from '@/components/HeaderNotify'
@@ -87,7 +87,7 @@ export const Render: FC<WelcomeProps> = ({ onNextStep }) => {
             onNextStep()
           }}
         >
-          Finish
+          Next
         </Button>
       </div>
     </Notify>

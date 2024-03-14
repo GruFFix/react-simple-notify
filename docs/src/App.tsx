@@ -11,6 +11,7 @@ import { Welcome } from '@/components/StepsNotifies/Welcome/Welcome.tsx'
 import { Alignment } from '@/components/StepsNotifies/Alignment/Alignment.tsx'
 import { Duration } from '@/components/StepsNotifies/Duration'
 import { Render } from '@/components/StepsNotifies/Render'
+import { Finish } from '@/components/StepsNotifies/Finish'
 
 export const App: FC = () => {
   const [step, setStep] = useState(0)
@@ -18,7 +19,7 @@ export const App: FC = () => {
   const nextStep = () => {
     setTimeout(() => {
       setStep((prev) => {
-        return prev === 3 ? 0 : prev + 1
+        return prev === 4 ? 0 : prev + 1
       })
     }, animationConfig.exit.duration)
   }
@@ -79,6 +80,22 @@ export const App: FC = () => {
         duration: 0,
         render: ({ onClose }) => (
           <Render
+            onNextStep={() => {
+              onClose()
+              nextStep()
+            }}
+          />
+        ),
+      })
+    }
+
+    if (step === 4) {
+      notify.open({
+        id: '4',
+        alignment: NotifyAlignment.bottomCenter,
+        duration: 0,
+        render: ({ onClose }) => (
+          <Finish
             onNextStep={() => {
               onClose()
               nextStep()
