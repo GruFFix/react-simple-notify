@@ -19,7 +19,7 @@
     "@emotion/styled": "^11.11.0",
     "@mdx-js/react": "^3.0.1",
     "@mdx-js/rollup": "^3.0.1",
-    "framer-motion": "^11.0.8",
+    "framer-motion": "^11.0.15",
     "install": "^0.13.0",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.29.0",
