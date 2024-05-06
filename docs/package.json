@@ -26,7 +26,7 @@
     "react": "^18.2.0",
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18.2.0",
-    "react-icons": "^5.0.1",
+    "react-icons": "^5.1.0",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-simple-notify": "^0.0.17",
     "the-new-css-reset": "^1.11.2"
