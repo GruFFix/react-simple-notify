@@ -62,5 +62,5 @@ export const NotifyContainers: FC = memo(() => {
         document.body,
         alignment,
       ),
-  )
+  ) as React.ReactNode[]
 })

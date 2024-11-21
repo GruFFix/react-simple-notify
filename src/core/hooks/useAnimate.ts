@@ -7,7 +7,7 @@ const ATTR_DYNAMIC = 'data-dynamic'
 const ATTR_REMOVAL_IN_PROGRESS = 'data-removal-in-progress'
 
 export const useAnimate = (
-  containerRef: RefObject<HTMLElement>,
+  containerRef: RefObject<HTMLElement | null>,
   alignment: NotifyAlignment,
 ): {
   isRendered: boolean
