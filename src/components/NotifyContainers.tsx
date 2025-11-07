@@ -6,6 +6,7 @@ import { Notify } from './Notify.tsx'
 
 import { NotifyAlignment, NotifyOptions } from '../types.ts'
 import { notifyObservable } from '../utils/notifiesManager.ts'
+import { ensureContainerStyles } from '../utils/injectStyles.ts'
 
 interface NotifyContainerProps {
   notifyGroup: Map<string, NotifyOptions>
@@ -42,6 +43,8 @@ export const NotifyContainers: FC = memo(() => {
   const rerender = useRerender()
 
   useEffect(() => {
+    ensureContainerStyles()
+
     const unsubscribe = notifyObservable.subscribe(() => {
       rerender()
     })
