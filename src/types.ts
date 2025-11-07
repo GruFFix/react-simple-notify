@@ -1,4 +1,4 @@
-import { FC, JSX, PropsWithChildren, ReactNode } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 
 export enum NotifyAlignment {
   topLeft = 'top-left',
@@ -17,7 +17,7 @@ export interface NotifyRenderArgs {
   onClose: () => void
 }
 
-export type RenderFunction = (args: NotifyRenderArgs) => ReactNode | JSX.Element
+export type RenderFunction = (args: NotifyRenderArgs) => ReactNode
 
 export interface NotifyOptions {
   id: string

@@ -34,7 +34,7 @@ export const Notify: React.FC<NotifyOptions> = memo(
     let content = render(params)
 
     if (typeof notifyComponent === 'function') {
-      content = notifyComponent({ ...params, children: content })
+      content = React.createElement(notifyComponent, params, content)
     } else if (React.isValidElement(notifyComponent)) {
       content = React.cloneElement(notifyComponent, params, content)
     }
