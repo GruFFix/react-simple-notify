@@ -1,7 +1,7 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": "GruFFix@yandex.ru",
   "homepage": "https://rsn.gruffix.ru",
   "type": "module",
@@ -38,14 +38,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.22",
     "@types/prismjs": "^1.26.3",
-    "@types/react": "^18.2.56",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "@vitejs/plugin-react": "^4.2.1",
