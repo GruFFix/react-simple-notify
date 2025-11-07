@@ -1,0 +1,76 @@
+.container {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  max-height: 100svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  pointer-events: none;
+  flex-direction: column;
+  width: 100%;
+  left: 0;
+  padding: var(--rsn-container-padding, 10px);
+  gap: var(--rsn-container-gap, 10px);
+
+  &.top-left {
+    align-items: flex-start;
+    top: 0;
+
+    &.reverse {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &.top-right {
+    align-items: flex-end;
+    top: 0;
+
+    &.reverse {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &.bottom-left {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    bottom: 0;
+
+    &.reverse {
+      flex-direction: column;
+    }
+  }
+
+  &.bottom-right {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    bottom: 0;
+
+    &.reverse {
+      flex-direction: column;
+    }
+  }
+
+  &.top-center {
+    align-items: center;
+    top: 0;
+
+    &.reverse {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &.bottom-center {
+    align-items: center;
+    flex-direction: column-reverse;
+    bottom: 0;
+
+    &.reverse {
+      flex-direction: column;
+    }
+  }
+}
+
+.container [data-rsn-notify] {
+  pointer-events: auto;
+}
