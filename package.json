@@ -1,7 +1,7 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.22",
+  "version": "0.0.23",
   "author": "GruFFix@yandex.ru",
   "homepage": "https://rsn.gruffix.ru",
   "type": "module",
@@ -65,7 +65,6 @@
     "prettier": "^3.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
-    "vite-plugin-dts": "^3.7.3",
-    "vite-plugin-lib-inject-css": "^2.0.0"
+    "vite-plugin-dts": "^3.7.3"
   }
 }
