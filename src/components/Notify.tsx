@@ -5,8 +5,6 @@ import { configObservable } from '../utils/configManager.ts'
 
 import { NotifyOptions } from '../types.ts'
 
-import s from '../styles.module.css'
-
 export const Notify: React.FC<NotifyOptions> = memo(
   ({ id, duration = 0, render, variant, alignment }) => {
     const { notifyComponent } = configObservable.get()
@@ -39,6 +37,6 @@ export const Notify: React.FC<NotifyOptions> = memo(
       content = React.cloneElement(notifyComponent, params, content)
     }
 
-    return <div className={s.notify}>{content}</div>
+    return <div data-rsn-notify>{content}</div>
   },
 )
