@@ -1,7 +1,7 @@
 {
   "name": "react-simple-notify",
   "private": false,
-  "version": "0.0.28",
+  "version": "0.0.29",
   "author": "GruFFix@yandex.ru",
   "homepage": "https://rsn.gruffix.ru",
   "type": "module",
@@ -11,11 +11,21 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js"
+      "import": "./dist/index.es.js",
+      "default": "./dist/index.es.js"
     },
     "./client": {
       "types": "./dist/client.d.ts",
-      "import": "./dist/client.es.js"
+      "import": "./dist/client.es.js",
+      "default": "./dist/client.es.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "client": [
+        "./dist/client.d.ts"
+      ]
     }
   },
   "keywords": [
