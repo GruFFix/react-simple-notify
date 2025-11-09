@@ -1,5 +1,3 @@
-import { NotifyContainers } from './components/NotifyContainers.tsx'
-
 import type { NotifyRenderArgs } from './types.ts'
 import { NotifyAlignment } from './types.ts'
 
@@ -18,11 +16,4 @@ const notify = {
   closeAll: closeAll,
 }
 
-export {
-  NotifyContainers,
-  NotifyAlignment,
-  NotifyRenderArgs,
-  animationConfig,
-  config,
-  notify,
-}
+export { NotifyAlignment, NotifyRenderArgs, animationConfig, config, notify }

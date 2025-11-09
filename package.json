@@ -5,9 +5,19 @@
   "author": "GruFFix@yandex.ru",
   "homepage": "https://rsn.gruffix.ru",
   "type": "module",
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.es.js"
+    }
+  },
   "keywords": [
     "react",
     "react component",

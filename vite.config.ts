@@ -8,10 +8,13 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve('src', 'index.ts'),
+      entry: {
+        index: path.resolve('src', 'index.ts'),
+        client: path.resolve('src', 'client.tsx'),
+      },
       name: 'react-simple-notify',
-      formats: ['es', 'umd'],
-      fileName: (format) => `index.${format}.js`,
+      formats: ['es'],
+      fileName: (format, entryName) => `${entryName}.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
