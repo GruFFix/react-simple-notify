@@ -4,13 +4,13 @@
 
 # React Simple Notify
 
-A lightweight, flexible, and SSR-safe notification library for React applications.
+A lightweight, flexible notification library for React applications.
 
 ## Features
 
 - 🚀 **Lightweight** - Minimal bundle size
 - 🎨 **Customizable** - Full control over styling and animations
-- ⚡ **SSR-Safe** - Works with Next.js, Remix, and other SSR frameworks
+- ⚡ **SSR Compatible** - Works with Next.js, Remix, and other SSR frameworks
 - 📦 **TypeScript** - Full type safety out of the box
 - 🎭 **Flexible Positioning** - 6 built-in positions
 - ⏱️ **Auto-dismiss** - Configurable duration or persistent notifications
@@ -34,8 +34,7 @@ pnpm add react-simple-notify
 ### Basic Usage
 
 ```jsx
-import { notify } from 'react-simple-notify';
-import { NotifyContainers } from 'react-simple-notify/client';
+import { notify, NotifyContainers } from 'react-simple-notify';
 
 function App() {
   const showNotification = () => {
@@ -307,99 +306,6 @@ Each animation stage (`enter`/`exit`) accepts:
 | `duration` | `number` | Animation duration in milliseconds. |
 | `easing` | `string` | CSS easing function (e.g., `'ease-in-out'`, `'cubic-bezier(0.4, 0, 0.2, 1)'`). |
 | `keyframes` | `Function` | Function returning array of keyframes. Receives `{ node, alignment }`. |
-
----
-
-## SSR Support
-
-The library is **fully SSR-compatible**. The core API can be imported in server environments without causing errors.
-
-### Next.js App Router
-
-```jsx
-// app/providers.tsx
-'use client';
-
-import { NotifyContainers } from 'react-simple-notify/client';
-
-export function Providers({ children }) {
-  return (
-    <>
-      {children}
-      <NotifyContainers />
-    </>
-  );
-}
-```
-
-```jsx
-// app/layout.tsx
-import { Providers } from './providers';
-
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
-}
-```
-
-```jsx
-// Anywhere in your app (client or server components)
-import { notify } from 'react-simple-notify';
-
-// This is safe to call even on the server
-// (it will simply no-op in non-browser environments)
-function handleError() {
-  notify.open({
-    render: () => <div>An error occurred</div>,
-  });
-}
-```
-
-### Remix
-
-```jsx
-// app/root.tsx
-import { NotifyContainers } from 'react-simple-notify/client';
-
-export default function App() {
-  return (
-    <html>
-      <head />
-      <body>
-        <Outlet />
-        <NotifyContainers />
-      </body>
-    </html>
-  );
-}
-```
-
----
-
-## Testing
-
-The library is test-friendly and won't crash when imported in Node.js environments like Vitest or Jest:
-
-```jsx
-// my-component.test.ts
-import { notify } from 'react-simple-notify';
-
-test('notification logic', () => {
-  // This won't crash even though there's no DOM
-  notify.open({
-    render: () => <div>Test notification</div>,
-  });
-
-  // Test your logic...
-});
-```
-
-**Note:** Notifications won't actually render in test environments (no DOM), but the API calls won't throw errors.
 
 ---
 
