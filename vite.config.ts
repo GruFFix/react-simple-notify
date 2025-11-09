@@ -27,7 +27,28 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    dts({ rollupTypes: true, insertTypesEntry: true, include: ['src'] }),
+    dts({
+      rollupTypes: true,
+      insertTypesEntry: true,
+      include: ['src'],
+      exclude: ['src/tests/**', '**/*.test.ts', '**/*.test.tsx'],
+    }),
     libInjectCss(),
   ],
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: './src/tests/setup.ts',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/tests/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/dist/',
+      ],
+    },
+  },
 })
