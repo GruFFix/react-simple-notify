@@ -9,8 +9,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      'react-simple-notify': path.resolve(__dirname, '../src')
-    }
+      'react-simple-notify': path.resolve(__dirname, '../src'),
+    },
+  },
+  build: {
+    outDir: path.resolve(__dirname, '../demobuild'),
+    emptyOutDir: true,
   },
   // css: {
   //   preprocessorOptions: {
