@@ -259,6 +259,7 @@ Customize container spacing:
 
 ### Custom Styles
 
+
 Style your notifications with regular CSS:
 
 ```jsx
