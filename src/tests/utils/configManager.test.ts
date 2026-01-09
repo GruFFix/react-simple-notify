@@ -138,7 +138,7 @@ describe('configManager', () => {
       expect(config.alignment).toBe(NotifyAlignment.bottomLeft)
       expect(config.reverse).toBe(false)
       expect(config.notifyComponent).toBe(Fragment)
-      expect(config.animationConfig.enter.duration).toBe(300)
+      expect(config.animationConfig.enter.duration).toBe(400)
     })
   })
 

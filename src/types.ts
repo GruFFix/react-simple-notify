@@ -13,8 +13,9 @@ export interface NotifyRenderArgs {
   id: string
   duration: number
   alignment: NotifyAlignment
-  variant?: string
   onClose: () => void
+  data?: unknown // For custom data that can be updated
+  timeRemaining: number // Time remaining until auto-close (in ms), updates every 100ms
 }
 
 export type RenderFunction = (args: NotifyRenderArgs) => ReactNode
@@ -24,11 +25,8 @@ export interface NotifyOptions {
   duration?: number
   alignment: NotifyAlignment
   render: RenderFunction
-  variant?: string
-}
-
-export type GroupedNotify = {
-  [key in NotifyAlignment]: NotifyOptions[]
+  pauseOnHover?: boolean
+  data?: unknown // For custom data that can be updated
 }
 
 interface AnimationStageConfig {
@@ -53,4 +51,6 @@ export interface ConfigProps {
   notifyComponent: FC<PropsWithChildren<NotifyRenderArgs>>
   alignment: NotifyAlignment
   reverse: boolean
+  maxNotifications: number
+  pauseOnHover: boolean
 }

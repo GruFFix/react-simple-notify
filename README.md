@@ -1,37 +1,38 @@
-![Logo](https://repository-images.githubusercontent.com/765200491/0b4162c0-8e67-4b8d-9d53-58b50c65c0f3)
-
-### [DEMO](http://rsn.gruffix.ru/)
-
 # React Simple Notify
 
-A lightweight, flexible notification library for React applications.
+[![npm version](https://img.shields.io/npm/v/react-simple-notify.svg)](https://www.npmjs.com/package/react-simple-notify)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-simple-notify)](https://bundlephobia.com/package/react-simple-notify)
+[![License](https://img.shields.io/npm/l/react-simple-notify.svg)](https://github.com/GruFFix/react-simple-notify/blob/main/LICENSE)
+
+A lightweight, performant notification library for React applications.
+
+**[Live Demo →](http://rsn.gruffix.ru/)**
 
 ## Features
 
-- 🚀 **Lightweight** - Minimal bundle size
-- 🎨 **Customizable** - Full control over styling and animations
-- ⚡ **SSR Compatible** - Works with Next.js, Remix, and other SSR frameworks
-- 📦 **TypeScript** - Full type safety out of the box
-- 🎭 **Flexible Positioning** - 6 built-in positions
-- ⏱️ **Auto-dismiss** - Configurable duration or persistent notifications
-
----
+- ⚡ **Lightning Fast** - Optimized performance with minimal re-renders
+- 📦 **Tiny Bundle** - Only ~5.6KB gzipped, zero dependencies
+- 🎨 **Fully Customizable** - Complete control over styling and animations
+- 🔧 **TypeScript First** - Built with TypeScript, full type safety
+- 🌐 **SSR Compatible** - Works with Next.js, Remix, and other SSR frameworks
+- ⏸️ **Pause on Hover** - Auto-dismiss timer pauses when users hover
+- 🎯 **Smart Positioning** - 6 built-in positions with stack management
 
 ## Installation
 
 ```bash
 npm install react-simple-notify
-# or
+```
+
+```bash
 yarn add react-simple-notify
-# or
+```
+
+```bash
 pnpm add react-simple-notify
 ```
 
----
-
 ## Quick Start
-
-### Basic Usage
 
 ```jsx
 import { notify, NotifyContainers } from 'react-simple-notify';
@@ -41,7 +42,8 @@ function App() {
     notify.open({
       render: ({ onClose }) => (
         <div className="notification">
-          <p>This is a notification!</p>
+          <h4>Success!</h4>
+          <p>Your changes have been saved</p>
           <button onClick={onClose}>Close</button>
         </div>
       ),
@@ -55,11 +57,7 @@ function App() {
     </>
   );
 }
-
-export default App;
 ```
-
----
 
 ## API Reference
 
@@ -67,43 +65,70 @@ export default App;
 
 Opens a new notification.
 
-#### Parameters
+#### Options
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `render` | `Function` | Yes | - | Render function that returns notification content. Receives `NotifyRenderArgs` as argument. |
-| `id` | `string` | No | Auto-generated | Unique identifier for the notification. |
-| `duration` | `number` | No | `3500` | Time in milliseconds before auto-close. Set to `0` for persistent notifications. |
-| `alignment` | `NotifyAlignment` | No | `bottomLeft` | Position on screen where notification appears. |
-| `variant` | `string` | No | - | Custom variant identifier for styling purposes. |
+| `render` | `(args: NotifyRenderArgs) => ReactNode` | Yes | - | Render function that returns notification content |
+| `id` | `string` | No | Auto-generated | Unique identifier for the notification |
+| `duration` | `number` | No | `3500` | Time in ms before auto-close. Set to `0` for persistent |
+| `alignment` | `NotifyAlignment` | No | `bottomLeft` | Position where notification appears |
+| `pauseOnHover` | `boolean` | No | `false` | Pause auto-dismiss timer on hover |
+| `data` | `any` | No | `undefined` | Custom data passed to render function |
 
-#### Render Function Arguments (`NotifyRenderArgs`)
-
-Your `render` function receives an object with:
+#### Render Function Arguments
 
 ```typescript
-{
-  id: string;              // Notification ID
-  duration: number;        // Duration in ms
-  alignment: NotifyAlignment; // Position
-  variant?: string;        // Custom variant (if provided)
-  onClose: () => void;     // Function to close this notification
+interface NotifyRenderArgs {
+  id: string;                    // Notification ID
+  duration: number;              // Duration in ms
+  alignment: NotifyAlignment;    // Position
+  onClose: () => void;           // Function to close this notification
+  data?: any;                    // Custom data (if provided)
+  timeRemaining: number;         // Time remaining until auto-close (in ms)
 }
 ```
 
 #### Example
 
 ```jsx
+import { notify, NotifyAlignment } from 'react-simple-notify';
+
 notify.open({
-  duration: 5000,
   alignment: NotifyAlignment.topRight,
-  variant: 'success',
-  render: ({ onClose, variant }) => (
-    <div className={`notification ${variant}`}>
-      <span>Operation completed successfully!</span>
+  duration: 5000,
+  pauseOnHover: true,
+  render: ({ onClose }) => (
+    <div className="notification success">
+      <span>✓ Operation completed successfully!</span>
       <button onClick={onClose}>✕</button>
     </div>
   ),
+});
+```
+
+---
+
+### `notify.update(id, options)`
+
+Updates an existing notification by ID.
+
+```jsx
+const id = notify.open({
+  duration: 0,
+  data: { progress: 0 },
+  render: ({ data }) => (
+    <div>Loading... {data.progress}%</div>
+  ),
+});
+
+// Update progress
+notify.update(id, { data: { progress: 50 } });
+
+// Update to completion
+notify.update(id, {
+  duration: 3000,
+  render: () => <div>✓ Complete!</div>,
 });
 ```
 
@@ -114,15 +139,12 @@ notify.open({
 Closes a specific notification by ID.
 
 ```jsx
-const notificationId = 'my-notification';
-
-notify.open({
-  id: notificationId,
+const id = notify.open({
   render: () => <div>I can be closed programmatically</div>,
 });
 
 // Later...
-notify.close(notificationId);
+notify.close(id);
 ```
 
 ---
@@ -165,29 +187,32 @@ notify.open({
 
 ---
 
-## Configuration API
+## Global Configuration
 
 ### `config.set(props)`
 
 Set global configuration for all notifications.
 
-#### Parameters
+#### Options
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `alignment` | `NotifyAlignment` | `bottomLeft` | Default position for all notifications. |
-| `reverse` | `boolean` | `false` | If `true`, new notifications appear at the bottom of the stack. |
-| `notifyComponent` | `React.ComponentType` | `Fragment` | Wrapper component for notification content. |
-| `animationConfig` | `AnimationConfig` | Default animations | Custom enter/exit animations. |
+| `alignment` | `NotifyAlignment` | `bottomLeft` | Default position for all notifications |
+| `reverse` | `boolean` | `false` | New notifications appear at bottom of stack |
+| `notifyComponent` | `React.ComponentType` | `Fragment` | Wrapper component for notification content |
+| `animationConfig` | `AnimationConfig` | Default animations | Custom enter/exit animations |
+| `maxNotifications` | `number` | `0` | Maximum notifications per position (0 = unlimited) |
+| `pauseOnHover` | `boolean` | `false` | Global pause on hover setting |
 
-#### Example: Global Configuration
+#### Example: Basic Configuration
 
 ```jsx
 import { config, NotifyAlignment } from 'react-simple-notify';
 
 config.set({
   alignment: NotifyAlignment.topRight,
-  reverse: true,
+  maxNotifications: 3,
+  pauseOnHover: true,
 });
 ```
 
@@ -196,8 +221,8 @@ config.set({
 ```jsx
 import { config } from 'react-simple-notify';
 
-const NotificationWrapper = ({ children, variant }) => (
-  <div className={`notification-wrapper ${variant}`}>
+const NotificationWrapper = ({ children }) => (
+  <div className="notification-wrapper">
     {children}
   </div>
 );
@@ -205,13 +230,6 @@ const NotificationWrapper = ({ children, variant }) => (
 config.set({
   notifyComponent: NotificationWrapper,
 });
-
-// Now all notifications will be wrapped
-notify.open({
-  variant: 'error',
-  render: () => <span>Error occurred!</span>,
-});
-// Renders: <NotificationWrapper variant="error"><span>Error occurred!</span></NotificationWrapper>
 ```
 
 ---
@@ -230,7 +248,7 @@ config.reset();
 
 ### CSS Custom Properties
 
-Customize container spacing using CSS variables:
+Customize container spacing:
 
 ```css
 :root {
@@ -239,12 +257,11 @@ Customize container spacing using CSS variables:
 }
 ```
 
-### Styling Notifications
+### Custom Styles
 
-Style your notification content using regular CSS:
+Style your notifications with regular CSS:
 
 ```jsx
-// Component
 notify.open({
   render: () => (
     <div className="my-notification">
@@ -255,7 +272,6 @@ notify.open({
 ```
 
 ```css
-/* Styles */
 .my-notification {
   background: white;
   padding: 16px;
@@ -268,9 +284,7 @@ notify.open({
 
 ## Custom Animations
 
-### Animation Configuration
-
-Override default animations using `animationConfig`:
+Override default animations:
 
 ```jsx
 import { config } from 'react-simple-notify';
@@ -279,16 +293,16 @@ config.set({
   animationConfig: {
     enter: {
       duration: 300,
-      easing: 'ease-out',
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
       keyframes: ({ alignment }) => [
-        { opacity: 0, transform: 'translateY(-100%)' },
+        { opacity: 0, transform: 'translateY(-20px)' },
         { opacity: 1, transform: 'translateY(0)' },
       ],
     },
     exit: {
       duration: 200,
       easing: 'ease-in',
-      keyframes: ({ node }) => [
+      keyframes: () => [
         { opacity: 1, transform: 'scale(1)' },
         { opacity: 0, transform: 'scale(0.8)' },
       ],
@@ -297,99 +311,170 @@ config.set({
 });
 ```
 
-### Animation API
-
-Each animation stage (`enter`/`exit`) accepts:
+### Animation Configuration
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `duration` | `number` | Animation duration in milliseconds. |
-| `easing` | `string` | CSS easing function (e.g., `'ease-in-out'`, `'cubic-bezier(0.4, 0, 0.2, 1)'`). |
-| `keyframes` | `Function` | Function returning array of keyframes. Receives `{ node, alignment }`. |
+| `duration` | `number` | Animation duration in milliseconds |
+| `easing` | `string` | CSS easing function |
+| `keyframes` | `(args) => Keyframe[]` | Function returning keyframes array |
 
 ---
 
 ## Advanced Examples
+
+### Progress Notification
+
+```jsx
+const showProgress = () => {
+  let progress = 0;
+
+  const id = notify.open({
+    duration: 0,
+    data: { progress: 0 },
+    render: ({ data }) => (
+      <div className="notification">
+        <h4>Uploading...</h4>
+        <div className="progress-bar">
+          <div style={{ width: `${data.progress}%` }} />
+        </div>
+        <p>{data.progress}%</p>
+      </div>
+    ),
+  });
+
+  const interval = setInterval(() => {
+    progress += 10;
+    if (progress > 100) {
+      clearInterval(interval);
+      notify.update(id, {
+        duration: 3000,
+        render: () => (
+          <div className="notification success">
+            <h4>✓ Upload Complete!</h4>
+          </div>
+        ),
+      });
+    } else {
+      notify.update(id, { data: { progress } });
+    }
+  }, 300);
+};
+```
 
 ### Persistent Notification
 
 ```jsx
 notify.open({
   duration: 0, // Never auto-close
+  pauseOnHover: false,
   render: ({ onClose }) => (
-    <div className="important-alert">
-      <h3>Action Required</h3>
-      <p>Please review your settings.</p>
+    <div className="notification warning">
+      <h4>⚠ Action Required</h4>
+      <p>Please review your settings</p>
       <button onClick={onClose}>Dismiss</button>
     </div>
   ),
 });
 ```
 
-### Success/Error Variants
+### Progress Bar with Auto-Close
 
 ```jsx
-const showSuccess = (message) => {
-  notify.open({
-    variant: 'success',
-    render: () => (
-      <div className="notification success">
-        ✓ {message}
-      </div>
-    ),
-  });
-};
+notify.open({
+  duration: 5000,
+  pauseOnHover: true,
+  render: ({ onClose, timeRemaining, duration }) => {
+    const progress = ((duration - timeRemaining) / duration) * 100;
 
-const showError = (message) => {
-  notify.open({
-    variant: 'error',
-    duration: 0, // Errors stay until dismissed
-    render: ({ onClose }) => (
-      <div className="notification error">
-        ✕ {message}
-        <button onClick={onClose}>Close</button>
+    return (
+      <div className="notification">
+        <h4>Auto-closing notification</h4>
+        <p>This will close in {Math.ceil(timeRemaining / 1000)}s</p>
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <button onClick={onClose}>Close now</button>
       </div>
-    ),
+    );
+  },
+});
+```
+
+### Promise-based Notification
+
+```jsx
+const saveData = async () => {
+  const id = notify.open({
+    duration: 0,
+    render: () => <div>Saving...</div>,
   });
+
+  try {
+    await fetch('/api/save', { method: 'POST' });
+    notify.close(id);
+    notify.open({
+      render: () => <div>✓ Saved successfully!</div>,
+    });
+  } catch (error) {
+    notify.update(id, {
+      duration: 0,
+      render: ({ onClose }) => (
+        <div className="notification error">
+          <span>✕ Failed to save</span>
+          <button onClick={onClose}>Close</button>
+        </div>
+      ),
+    });
+  }
 };
 ```
 
-### Programmatic Control
+### Limit Maximum Notifications
 
 ```jsx
-const notificationId = 'loading-notification';
+import { config } from 'react-simple-notify';
 
-// Show loading notification
-notify.open({
-  id: notificationId,
-  duration: 0,
-  render: () => <div>Loading...</div>,
+config.set({
+  maxNotifications: 3, // Only 3 visible at once per position
 });
 
-// Later, close it and show success
-fetch('/api/data')
-  .then(() => {
-    notify.close(notificationId);
-    notify.open({
-      render: () => <div>Data loaded successfully!</div>,
-    });
+// Older notifications are automatically removed
+for (let i = 0; i < 10; i++) {
+  notify.open({
+    render: () => <div>Notification {i + 1}</div>,
   });
+}
+// Only the last 3 will be visible
 ```
 
 ---
 
 ## TypeScript
 
-Full TypeScript support is included. All types are exported:
+Full TypeScript support included. All types are exported:
 
 ```typescript
 import type {
   NotifyRenderArgs,
+  NotifyOptions,
   NotifyAlignment,
   AnimationConfig,
-  ConfigProps
+  ConfigProps,
 } from 'react-simple-notify';
 ```
+
+---
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ---
 
@@ -397,7 +482,11 @@ import type {
 
 MIT © [GruFFix](mailto:GruFFix@yandex.ru)
 
+---
+
 ## Links
 
-- [Demo](http://rsn.gruffix.ru/)
-- [GitHub](https://github.com/GruFFix/react-simple-notify)
+- **[Live Demo](http://rsn.gruffix.ru/)**
+- **[GitHub Repository](https://github.com/GruFFix/react-simple-notify)**
+- **[NPM Package](https://www.npmjs.com/package/react-simple-notify)**
+- **[Report Issues](https://github.com/GruFFix/react-simple-notify/issues)**
