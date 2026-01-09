@@ -25,6 +25,12 @@ export class Observable<T> {
   }
 
   private notify(): void {
-    this.listeners.forEach((listener) => listener())
+    this.listeners.forEach((listener) => {
+      try {
+        listener()
+      } catch (error) {
+        console.error('Observable listener error:', error)
+      }
+    })
   }
 }

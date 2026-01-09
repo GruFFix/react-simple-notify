@@ -10,14 +10,14 @@ describe('animationConfig', () => {
     })
 
     it('should have duration, easing and keyframes for enter', () => {
-      expect(animationConfig.enter.duration).toBe(300)
-      expect(animationConfig.enter.easing).toBe('cubic-bezier(0.4, 0.0, 0.2, 1)')
+      expect(animationConfig.enter.duration).toBe(400)
+      expect(animationConfig.enter.easing).toBe('cubic-bezier(0.34, 1.56, 0.64, 1)')
       expect(typeof animationConfig.enter.keyframes).toBe('function')
     })
 
     it('should have duration, easing and keyframes for exit', () => {
-      expect(animationConfig.exit.duration).toBe(150)
-      expect(animationConfig.exit.easing).toBe('linear')
+      expect(animationConfig.exit.duration).toBe(250)
+      expect(animationConfig.exit.easing).toBe('cubic-bezier(0.4, 0, 1, 1)')
       expect(typeof animationConfig.exit.keyframes).toBe('function')
     })
   })
@@ -32,11 +32,11 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateX(-100%)',
+        transform: 'translate(-20px, -20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateX(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
@@ -50,11 +50,11 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateX(100%)',
+        transform: 'translate(20px, -20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateX(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
@@ -68,11 +68,11 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateX(-100%)',
+        transform: 'translate(-20px, 20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateX(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
@@ -86,11 +86,11 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateX(100%)',
+        transform: 'translate(20px, 20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateX(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
@@ -104,11 +104,11 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateY(-100%)',
+        transform: 'translate(0, -20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateY(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
@@ -122,23 +122,20 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        transform: 'translateY(100%)',
+        transform: 'translate(0, 20px) scale(0.95)',
         opacity: 0
       })
       expect(keyframes[1]).toEqual({
-        transform: 'translateY(0)',
+        transform: 'translate(0, 0) scale(1)',
         opacity: 1
       })
     })
   })
 
   describe('exit keyframes', () => {
-    it('should return collapse keyframes', () => {
+    it('should return maxHeight and scale transform keyframes', () => {
       const mockNode = document.createElement('div')
-      Object.defineProperty(mockNode, 'scrollHeight', {
-        value: 100,
-        configurable: true
-      })
+      mockNode.getBoundingClientRect = () => ({ height: 100 }) as DOMRect
 
       const keyframes = animationConfig.exit.keyframes({
         node: mockNode,
@@ -147,60 +144,51 @@ describe('animationConfig', () => {
 
       expect(keyframes).toHaveLength(2)
       expect(keyframes[0]).toEqual({
-        height: '100px',
+        maxHeight: '100px',
+        marginBottom: '10px',
+        transform: 'scale(1) translateX(0)',
         opacity: 1
       })
       expect(keyframes[1]).toEqual({
-        height: 0,
+        maxHeight: '0px',
+        marginBottom: '0px',
+        transform: 'scale(0.9) translateX(20px)',
         opacity: 0
       })
     })
 
-    it('should set transform origin and overflow on node', () => {
+    it('should use node height for maxHeight calculation', () => {
       const mockNode = document.createElement('div')
+      mockNode.getBoundingClientRect = () => ({ height: 150 }) as DOMRect
 
-      animationConfig.exit.keyframes({
+      const keyframes = animationConfig.exit.keyframes({
         node: mockNode,
         alignment: NotifyAlignment.topLeft
       })
 
-      expect(mockNode.style.transformOrigin).toBe('center')
-      expect(mockNode.style.overflow).toBe('hidden')
+      expect(keyframes[0].maxHeight).toBe('150px')
     })
 
-    it('should handle different node heights', () => {
+    it('should work consistently across alignments', () => {
       const mockNode = document.createElement('div')
-      Object.defineProperty(mockNode, 'scrollHeight', {
-        value: 250,
-        configurable: true
-      })
+      mockNode.getBoundingClientRect = () => ({ height: 100 }) as DOMRect
 
       const keyframes = animationConfig.exit.keyframes({
         node: mockNode,
-        alignment: NotifyAlignment.bottomRight
+        alignment: NotifyAlignment.bottomCenter
       })
 
       expect(keyframes[0]).toEqual({
-        height: '250px',
+        maxHeight: '100px',
+        marginBottom: '10px',
+        transform: 'scale(1) translateX(0)',
         opacity: 1
       })
-    })
-
-    it('should work with zero height', () => {
-      const mockNode = document.createElement('div')
-      Object.defineProperty(mockNode, 'scrollHeight', {
-        value: 0,
-        configurable: true
-      })
-
-      const keyframes = animationConfig.exit.keyframes({
-        node: mockNode,
-        alignment: NotifyAlignment.bottomRight
-      })
-
-      expect(keyframes[0]).toEqual({
-        height: '0px',
-        opacity: 1
+      expect(keyframes[1]).toEqual({
+        maxHeight: '0px',
+        marginBottom: '0px',
+        transform: 'scale(0.9) translateX(20px)',
+        opacity: 0
       })
     })
   })

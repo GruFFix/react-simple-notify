@@ -9,6 +9,8 @@ const initConfig: ConfigProps = {
   animationConfig,
   notifyComponent: Fragment,
   reverse: false,
+  maxNotifications: 0,
+  pauseOnHover: false,
 }
 
 export const configObservable = new Observable<ConfigProps>(initConfig)

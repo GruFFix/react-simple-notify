@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import { Notify } from '../../components/Notify'
 import { NotifyAlignment } from '../../types'
 import * as notifiesManager from '../../utils/notifiesManager'
@@ -41,9 +41,9 @@ describe('Notify', () => {
       expect(screen.getByText('Test notification')).toBeDefined()
     })
 
-    it('should render with custom variant', () => {
-      const renderFn = ({ variant }: { variant?: string }) => (
-        <div>Variant: {variant}</div>
+    it('should render with custom data', () => {
+      const renderFn = ({ data }: { data?: { type: string } }) => (
+        <div>Type: {data?.type}</div>
       )
 
       render(
@@ -51,12 +51,12 @@ describe('Notify', () => {
           id="test-1"
           duration={3000}
           alignment={NotifyAlignment.topLeft}
-          variant="success"
+          data={{ type: 'success' }}
           render={renderFn}
         />,
       )
 
-      expect(screen.getByText('Variant: success')).toBeDefined()
+      expect(screen.getByText('Type: success')).toBeDefined()
     })
 
     it('should pass correct params to render function', () => {
@@ -67,7 +67,7 @@ describe('Notify', () => {
           id="test-123"
           duration={5000}
           alignment={NotifyAlignment.bottomRight}
-          variant="error"
+          data={{ type: 'error' }}
           render={mockRender}
         />,
       )
@@ -76,8 +76,9 @@ describe('Notify', () => {
         id: 'test-123',
         duration: 5000,
         alignment: NotifyAlignment.bottomRight,
-        variant: 'error',
+        data: { type: 'error' },
         onClose: expect.any(Function),
+        timeRemaining: 5000,
       })
     })
 
@@ -208,14 +209,14 @@ describe('Notify', () => {
     it('should pass params to custom component', () => {
       const CustomComponent = ({
         id,
-        variant,
+        data,
         children,
       }: {
         id: string
-        variant?: string
+        data?: { type: string }
         children?: React.ReactNode
       }) => (
-        <div data-id={id} data-variant={variant}>
+        <div data-id={id} data-type={data?.type}>
           {children}
         </div>
       )
@@ -229,14 +230,86 @@ describe('Notify', () => {
           id="test-123"
           duration={3000}
           alignment={NotifyAlignment.topLeft}
-          variant="warning"
+          data={{ type: 'warning' }}
           render={renderFn}
         />,
       )
 
       const wrapper = container.querySelector('[data-id="test-123"]')
       expect(wrapper).toBeDefined()
-      expect(wrapper?.getAttribute('data-variant')).toBe('warning')
+      expect(wrapper?.getAttribute('data-type')).toBe('warning')
+    })
+  })
+
+  describe('timeRemaining', () => {
+    it('should initialize timeRemaining with duration', () => {
+      const mockRender = vi.fn(() => <div>Test</div>)
+
+      render(
+        <Notify
+          id="test-1"
+          duration={5000}
+          alignment={NotifyAlignment.topLeft}
+          render={mockRender}
+        />,
+      )
+
+      expect(mockRender).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeRemaining: 5000,
+        }),
+      )
+    })
+
+    it('should update timeRemaining over time', () => {
+      let latestTimeRemaining = 0
+
+      const renderFn = ({ timeRemaining }: { timeRemaining: number }) => {
+        latestTimeRemaining = timeRemaining
+        return <div>Time: {timeRemaining}</div>
+      }
+
+      render(
+        <Notify
+          id="test-1"
+          duration={5000}
+          alignment={NotifyAlignment.topLeft}
+          render={renderFn}
+        />,
+      )
+
+      expect(latestTimeRemaining).toBe(5000)
+
+      act(() => {
+        vi.advanceTimersByTime(200)
+      })
+
+      expect(latestTimeRemaining).toBeLessThan(5000)
+      expect(latestTimeRemaining).toBeGreaterThan(0)
+    })
+
+    it('should not update timeRemaining when duration is 0', () => {
+      let renderCount = 0
+
+      const renderFn = () => {
+        renderCount++
+        return <div>Test</div>
+      }
+
+      render(
+        <Notify
+          id="test-1"
+          duration={0}
+          alignment={NotifyAlignment.topLeft}
+          render={renderFn}
+        />,
+      )
+
+      const initialRenderCount = renderCount
+
+      vi.advanceTimersByTime(1000)
+
+      expect(renderCount).toBe(initialRenderCount)
     })
   })
 
