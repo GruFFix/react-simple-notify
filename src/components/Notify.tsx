@@ -103,10 +103,12 @@ export const Notify: React.FC<NotifyOptions> = memo(
 
     let content = render(params)
 
-    if (typeof notifyComponent === 'function') {
-      content = React.createElement(notifyComponent, params, content)
-    } else if (React.isValidElement(notifyComponent)) {
-      content = React.cloneElement(notifyComponent, params, content)
+    if (notifyComponent && notifyComponent !== React.Fragment) {
+      if (typeof notifyComponent === 'function') {
+        content = React.createElement(notifyComponent, params, content)
+      } else if (React.isValidElement(notifyComponent)) {
+        content = React.cloneElement(notifyComponent, params, content)
+      }
     }
 
     return (
