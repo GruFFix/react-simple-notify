@@ -11,7 +11,7 @@ A lightweight, performant notification library for React applications.
 ## Features
 
 - ⚡ **Lightning Fast** - Optimized performance with minimal re-renders
-- 📦 **Tiny Bundle** - Only ~5.6KB gzipped, zero dependencies
+- 📦 **Tiny Bundle** - Only ~3.5KB gzipped, zero dependencies
 - 🎨 **Fully Customizable** - Complete control over styling and animations
 - 🔧 **TypeScript First** - Built with TypeScript, full type safety
 - 🌐 **SSR Compatible** - Works with Next.js, Remix, and other SSR frameworks
