@@ -87,6 +87,7 @@ interface NotifyRenderArgs {
   onClose: () => void;           // Function to close this notification
   data?: any;                    // Custom data (if provided)
   timeRemaining: number;         // Time remaining until auto-close (in ms)
+  dataTestId?: string;           // Test ID (if provided)
 }
 ```
 

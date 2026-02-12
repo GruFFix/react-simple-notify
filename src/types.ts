@@ -16,6 +16,7 @@ export interface NotifyRenderArgs {
   onClose: () => void
   data?: unknown // For custom data that can be updated
   timeRemaining: number // Time remaining until auto-close (in ms), updates every 100ms
+  dataTestId?: string
 }
 
 export type RenderFunction = (args: NotifyRenderArgs) => ReactNode

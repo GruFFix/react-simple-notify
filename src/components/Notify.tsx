@@ -99,6 +99,7 @@ export const Notify: React.FC<NotifyOptions> = memo(
       onClose: handleClose,
       data,
       timeRemaining,
+      dataTestId,
     }
 
     let content = render(params)
