@@ -6,7 +6,7 @@ import { configObservable } from '../utils/configManager.ts'
 import { NotifyOptions } from '../types.ts'
 
 export const Notify: React.FC<NotifyOptions> = memo(
-  ({ id, duration = 0, render, alignment, pauseOnHover, data }) => {
+  ({ id, duration = 0, render, alignment, pauseOnHover, data, dataTestId }) => {
     const { notifyComponent, pauseOnHover: globalPauseOnHover } =
       configObservable.get()
 
@@ -114,6 +114,7 @@ export const Notify: React.FC<NotifyOptions> = memo(
     return (
       <div
         data-rsn-notify
+        data-testid={dataTestId}
         role="alert"
         aria-live="polite"
         aria-atomic="true"

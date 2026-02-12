@@ -27,6 +27,7 @@ export interface NotifyOptions {
   render: RenderFunction
   pauseOnHover?: boolean
   data?: unknown // For custom data that can be updated
+  dataTestId?: string
 }
 
 interface AnimationStageConfig {

@@ -15,6 +15,7 @@ export const openNotify = (
     id?: string
     duration?: number
     alignment?: NotifyAlignment
+    dataTestId?: string
   },
 ) => {
   const config = configObservable.get()

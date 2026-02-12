@@ -10,6 +10,7 @@ import { notifyObservable } from '../utils/notifiesManager.ts'
 interface NotifyContainerProps {
   notifyGroup: Map<string, NotifyOptions>
   alignment: NotifyAlignment
+  dataTestId?: string
 }
 
 const areEqual = (
@@ -41,13 +42,17 @@ const areEqual = (
 }
 
 const NotifyContainerComponent: FC<NotifyContainerProps> = memo(
-  ({ notifyGroup, alignment }) => {
+  ({ notifyGroup, alignment, dataTestId }) => {
     const notifies = []
     for (const notify of notifyGroup.values()) {
       notifies.push(<Notify key={notify.id} {...notify} />)
     }
 
-    return <NotifyContainer alignment={alignment}>{notifies}</NotifyContainer>
+    return (
+      <NotifyContainer alignment={alignment} dataTestId={dataTestId}>
+        {notifies}
+      </NotifyContainer>
+    )
   },
   areEqual,
 )
@@ -57,33 +62,40 @@ const useRerender = () => {
   return useCallback(() => setState({}), [])
 }
 
-export const NotifyContainers: FC = memo(() => {
-  const rerender = useRerender()
+interface NotifyContainersProps {
+  dataTestId?: string
+}
 
-  useEffect(() => {
-    const unsubscribe = notifyObservable.subscribe(() => {
-      rerender()
-    })
+export const NotifyContainers: FC<NotifyContainersProps> = memo(
+  ({ dataTestId }) => {
+    const rerender = useRerender()
 
-    return () => {
-      unsubscribe()
+    useEffect(() => {
+      const unsubscribe = notifyObservable.subscribe(() => {
+        rerender()
+      })
+
+      return () => {
+        unsubscribe()
+      }
+    }, [rerender])
+
+    if (typeof document === 'undefined') {
+      return null
     }
-  }, [rerender])
 
-  if (typeof document === 'undefined') {
-    return null
-  }
-
-  return Object.entries(notifyObservable.get()).map(
-    ([alignment, notifications]) =>
-      createPortal(
-        <NotifyContainerComponent
-          alignment={alignment as NotifyAlignment}
-          key={alignment}
-          notifyGroup={notifications}
-        />,
-        document.body,
-        alignment,
-      ),
-  )
-})
+    return Object.entries(notifyObservable.get()).map(
+      ([alignment, notifications]) =>
+        createPortal(
+          <NotifyContainerComponent
+            alignment={alignment as NotifyAlignment}
+            key={alignment}
+            notifyGroup={notifications}
+            dataTestId={dataTestId}
+          />,
+          document.body,
+          alignment,
+        ),
+    )
+  },
+)

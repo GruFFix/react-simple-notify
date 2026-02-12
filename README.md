@@ -75,6 +75,7 @@ Opens a new notification.
 | `alignment` | `NotifyAlignment` | No | `bottomLeft` | Position where notification appears |
 | `pauseOnHover` | `boolean` | No | `false` | Pause auto-dismiss timer on hover |
 | `data` | `any` | No | `undefined` | Custom data passed to render function |
+| `dataTestId` | `string` | No | `undefined` | Test ID for targeting in tests |
 
 #### Render Function Arguments
 
